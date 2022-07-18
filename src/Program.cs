@@ -81,10 +81,3 @@ public interface IObjectManager
   void destroy(IManagableObject o);
 }
 
-class Program
-{
-  static void Main(string[] args)
-  {
-
-  }
-}
