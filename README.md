@@ -2,6 +2,65 @@
 
 Mutiplayer platformer engine.
 
+# Engine
+
+Engine is multiplayer-centric.
+
+- multiplayer
+- scene loading
+- scene rendering
+- scene queries api
+- game objects lifecycle management
+- physics
+- custom game logic components support
+- main loop (game logic execution order)
+
+## Server main loop
+
+- recieve commands from player connections
+- create shadow scene
+- execute lifecycle manager requests and call lcm events, write changes to shadow scene
+- execute physics, call physic events, write changes to shadow scene
+- execute command events, write changes to shadow scene
+- build snapshot from shadow scene and consider shadow scene an actual scene state
+- broadcast scene snapshot
+
+## Client main loop
+
+- scan user input
+- send commands
+- recieve (e.g., snapshot)
+- apply snapshot to scene
+- render scene
+
+## Protocol
+
+Messages from client to server.
+
+Message
+- kind
+- id
+- payload
+
+ClientMessage
+- kind (connection, command)
+
+ConnectionClientMessage
+- id (disconnect)
+
+CommandClientMessage
+- id (user-defined, e.g., move, fire, reload)
+
+ServerMessage
+- kind (connection, update)
+
+ConnectionServerMessage
+- id (disconnect)
+
+UpdateServerMessage
+- id (scene update)
+- data (snapshot)
+
 ## Entities
 
 Scene.
