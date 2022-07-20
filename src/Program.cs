@@ -56,6 +56,11 @@ public interface ISceneData
     ISceneGeometry Geometry { get; }
 }
 
+public interface IEditableSceneData: ISceneData
+{
+    public void AddPlatform(ICollidable platform);
+}
+
 public interface IScene : ISceneData
 {
     void Add(ISceneObject o);
