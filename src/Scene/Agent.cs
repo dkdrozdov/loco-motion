@@ -8,7 +8,7 @@ class Agent : IPhysicalObject
         Face = face;
         Mass = mass;
         BottomLeft = bottomLeft;
-        TopRigth = topRigth;
+        TopRight = topRigth;
     }
 
     public string id { get; set; }
@@ -17,7 +17,7 @@ class Agent : IPhysicalObject
     public IVector2D Face { get; set; }
     public float Mass { get; set; }
     public IVector2D BottomLeft { get; set; }
-    public IVector2D TopRigth { get; set; }
+    public IVector2D TopRight { get; set; }
 
     public void OnCollision(ICollisionEvent e)
     {

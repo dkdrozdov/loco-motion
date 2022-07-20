@@ -1,83 +1,83 @@
 ﻿public interface IVector2D
 {
-  int X { get; set; }
-  int Y { get; set; }
+    int X { get; set; }
+    int Y { get; set; }
 }
 
 public interface ISceneObjectData
 {
-  string id { get; set; }
-  IVector2D Position { get; set; }
+    string id { get; set; }
+    IVector2D Position { get; set; }
 }
 
 public interface IMoveEvent
 {
-  IVector2D From { get; }
-  IVector2D To { get; }
+    IVector2D From { get; }
+    IVector2D To { get; }
 }
 
 public interface ICollisionEvent
 {
-  IPhysicalObject CollidingObject { get; }
+    IPhysicalObject CollidingObject { get; }
 }
 
 public interface ISceneObject : ISceneObjectData, IManagableObject
 {
-  ISceneObjectData snapshot();
+    ISceneObjectData Snapshot();
 }
 
 public interface ICollidable
 {
-  IVector2D BottomLeft { get; set; }
-  IVector2D TopRigth { get; set; }
+    IVector2D BottomLeft { get; set; }
+    IVector2D TopRight { get; set; }
 }
 
 public interface IPhysicalObjectData : ICollidable
 {
-  IVector2D Velocity { get; set; }
-  IVector2D Face { get; set; }
-  float Mass { get; set; }
+    IVector2D Velocity { get; set; }
+    IVector2D Face { get; set; }
+    float Mass { get; set; }
 }
 
 public interface IPhysicalObject : ISceneObject, IPhysicalObjectData
 {
-  void OnMove(IMoveEvent e);
-  void OnCollision(ICollisionEvent e);
+    void OnMove(IMoveEvent e);
+    void OnCollision(ICollisionEvent e);
 }
 
 public interface ISceneGeometry
 {
-  IEnumerable<ICollidable> Platforms { get; }
+    IEnumerable<ICollidable> Platforms { get; }
 }
 
 public interface ISceneData
 {
-  IVector2D Size { get; }
-  ISceneGeometry Geometry { get; }
+    IVector2D Size { get; }
+    ISceneGeometry Geometry { get; }
 }
 
 public interface IScene : ISceneData
 {
-  void add(ISceneObject o);
-  void remove(ISceneObject o);
-  ISceneObject query(string id);
-  ISceneData snaphsot();
+    void Add(ISceneObject o);
+    void Remove(ISceneObject o);
+    ISceneObject Query(string id);
+    ISceneData Snapshot();
 }
 
 public interface IPhysics
 {
-  ISceneData step(IScene scene, float dt);
+    ISceneData step(IScene scene, float dt);
 }
 
 public interface IManagableObject
 {
-  void OnCreate();
-  void OnDestroy();
+    void OnCreate();
+    void OnDestroy();
 }
 
 public interface IObjectManager
 {
-  T create<T>() where T : IManagableObject;
-  void destroy(IManagableObject o);
+    T create<T>() where T : IManagableObject;
+    void destroy(IManagableObject o);
 }
 
