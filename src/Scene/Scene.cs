@@ -1,7 +1,41 @@
+public interface ISceneObjectData
+{
+    string id { get; set; }
+    IVector2D Position { get; set; }
+}
+
+public interface ISceneObject : ISceneObjectData, IManagableObject
+{
+    ISceneObjectData Snapshot();
+}
+
+public interface ISceneGeometry
+{
+    IEnumerable<ICollidable> Platforms { get; }
+}
+
+public interface ISceneData
+{
+    IVector2D Size { get; }
+    ISceneGeometry Geometry { get; }
+    IEnumerable<ISceneObjectData> SceneObjects { get; }
+}
+
+public interface IScene : ISceneData
+{
+    void Add(ISceneObject o);
+    void Remove(ISceneObject o);
+    ISceneObject Query(string id);
+    ISceneData Snapshot();
+}
+
 class Scene : IScene
 {
     public IVector2D Size { get; set; }
     public ISceneGeometry Geometry { get; set; }
+
+    public IEnumerable<ISceneObjectData> SceneObjects => throw new NotImplementedException();
+
     private List<ISceneObject> _objects = new List<ISceneObject>();
 
     public Scene(IVector2D size, ISceneGeometry geometry)
