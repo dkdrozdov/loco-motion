@@ -1,13 +1,13 @@
 class SceneGeometry : ISceneGeometry
 {
 
-    public SceneGeometry(IEnumerable<ICollidable> platforms)
+    public SceneGeometry(IEnumerable<ICollidableData> platforms)
     {
         Platforms = platforms;
     }
     public SceneGeometry()
     {
-        Platforms = new List<ICollidable>();
+        Platforms = new List<ICollidableData>();
     }
-    public IEnumerable<ICollidable> Platforms { get; }
+    public IEnumerable<ICollidableData> Platforms { get; }
 }

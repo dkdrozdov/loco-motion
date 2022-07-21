@@ -1,10 +1,13 @@
-class Platform : ICollidable
+class Platform : ICollidableData
 {
-    public IVector2D BottomLeft { get; set; }
-    public IVector2D TopRight { get; set; }
-    public Platform(IVector2D bottomLeft, IVector2D topRight)
+    public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public IVector2D Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public float CollisionBoxWidth { get; set; }
+    public float CollisionBoxHeight { get; set; }
+
+    public Platform(float collisionBoxWidth, float collisionBoxHeight)
     {
-        BottomLeft = bottomLeft;
-        TopRight = topRight;
+        CollisionBoxWidth = collisionBoxWidth;
+        CollisionBoxHeight = collisionBoxHeight;
     }
 }

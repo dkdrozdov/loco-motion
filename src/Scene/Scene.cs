@@ -9,9 +9,31 @@ public interface ISceneObject : ISceneObjectData, IManagableObject
     ISceneObjectData Snapshot();
 }
 
+public class SceneObject : ISceneObject
+{
+    public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public IVector2D Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    // TODO: Move to `ManagebleObject` class.
+    public void OnCreate()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnDestroy()
+    {
+        throw new NotImplementedException();
+    }
+
+    public ISceneObjectData Snapshot()
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public interface ISceneGeometry
 {
-    IEnumerable<ICollidable> Platforms { get; }
+    IEnumerable<ICollidableData> Platforms { get; }
 }
 
 public interface ISceneData
@@ -26,15 +48,17 @@ public interface IScene : ISceneData
     void Add(ISceneObject o);
     void Remove(ISceneObject o);
     ISceneObject Query(string id);
+    IEnumerable<T> All<T>();
+    IEnumerable<ISceneObject> All();
     ISceneData Snapshot();
 }
 
-class Scene : IScene
+public class Scene : IScene
 {
     public IVector2D Size { get; set; }
     public ISceneGeometry Geometry { get; set; }
 
-    public IEnumerable<ISceneObjectData> SceneObjects => throw new NotImplementedException();
+    public IEnumerable<ISceneObjectData> SceneObjects => _objects;
 
     private List<ISceneObject> _objects = new List<ISceneObject>();
 
@@ -73,5 +97,10 @@ class Scene : IScene
     public IEnumerable<T> All<T>()
     {
         return _objects.OfType<T>();
+    }
+
+    public IEnumerable<ISceneObject> All()
+    {
+        throw new NotImplementedException();
     }
 }

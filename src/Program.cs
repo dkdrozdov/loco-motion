@@ -1,17 +1,12 @@
 ﻿public interface IVector2D
 {
-    int X { get; set; }
-    int Y { get; set; }
+    float X { get; set; }
+    float Y { get; set; }
 }
 
 public interface IEditableSceneData : ISceneData
 {
-    public void AddPlatform(ICollidable platform);
-}
-
-public interface IPhysics
-{
-    ISceneData step(IScene scene, float dt);
+    public void AddPlatform(ICollidableData platform);
 }
 
 public interface IManagableObject

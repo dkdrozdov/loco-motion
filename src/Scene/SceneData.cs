@@ -9,4 +9,7 @@ class SceneData : ISceneData
     public IVector2D Size { get; }
 
     public ISceneGeometry Geometry { get; }
+
+    // TODO: implement.
+    public IEnumerable<ISceneObjectData> SceneObjects => throw new NotImplementedException();
 }
