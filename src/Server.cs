@@ -1,11 +1,11 @@
 class Server
 {
-  public Server()
-  {
+    public Server()
+    {
 
-  }
-  void Run()
-  {
+    }
+    void Run()
+    {
 
-  }
+    }
 }
