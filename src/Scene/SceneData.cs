@@ -1,15 +1,15 @@
 class SceneData : ISceneData
 {
-    public SceneData(IVector2D size, ISceneGeometry geometry)
+    public SceneData(IVector2D size, ISceneGeometry geometry, IEnumerable<ISceneObjectData> sceneObjects)
     {
         Size = size;
         Geometry = geometry;
+        SceneObjects = sceneObjects;
     }
 
     public IVector2D Size { get; }
 
     public ISceneGeometry Geometry { get; }
 
-    // TODO: implement.
-    public IEnumerable<ISceneObjectData> SceneObjects => throw new NotImplementedException();
+    public IEnumerable<ISceneObjectData> SceneObjects { get; }
 }

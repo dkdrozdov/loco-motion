@@ -15,11 +15,18 @@ class EditableSceneData : IEditableSceneData
     public ISceneGeometry Geometry => _geometry;
     public IVector2D Size { get; private set; }
 
-    public IEnumerable<ISceneObjectData> SceneObjects => throw new NotImplementedException();
+    public IEnumerable<ISceneObjectData> SceneObjects { get; }
 
+    public EditableSceneData(EditableSceneGeometry geometry, IVector2D size, IEnumerable<ISceneObjectData> sceneObjects)
+    {
+        _geometry = geometry;
+        Size = size;
+        SceneObjects = sceneObjects;
+    }
     public EditableSceneData(IVector2D size)
     {
         Size = size;
+        SceneObjects = new List<ISceneObjectData>();
     }
 
     public void AddPlatform(ICollidableData platform)
@@ -31,4 +38,5 @@ class EditableSceneData : IEditableSceneData
     {
         throw new NotImplementedException();
     }
+
 }
