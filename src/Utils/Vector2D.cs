@@ -1,4 +1,4 @@
-class Vector2D : IVector2D
+public class Vector2D : IVector2D
 {
     public Vector2D(float x, float y)
     {

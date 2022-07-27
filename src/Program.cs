@@ -1,23 +1,25 @@
-﻿public interface IVector2D
-{
-    float X { get; set; }
-    float Y { get; set; }
-}
+﻿// Server app startup includes:
+// - process environment variables
+// - process cli args
+// - pick implementations
+// - load resources (e.g., scene file)
+// - init scene
+// - init server config
+// - init server
+// - run server main loop
 
-public interface IEditableSceneData : ISceneData
+namespace LocoMotionServer
 {
-    public void AddPlatform(ICollidableData platform);
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var lm = new LifecycleManager();
+            var scene = new Scene();
+            var physics = new Physics(scene);
+            var config = new ServerConfig();
+            var server = new Server(lm, scene, physics, config);
+            server.Start();
+        }
+    }
 }
-
-public interface IManagableObject
-{
-    void OnCreate();
-    void OnDestroy();
-}
-
-public interface IObjectManager
-{
-    T create<T>() where T : IManagableObject;
-    void destroy(IManagableObject o);
-}
-
