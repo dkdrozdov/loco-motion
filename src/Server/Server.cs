@@ -1,3 +1,5 @@
+using System;
+
 namespace LocoMotionServer
 {
     public interface IServerConfig

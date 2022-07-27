@@ -1,3 +1,5 @@
+using System;
+
 class Platform : ICollidableData
 {
     public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

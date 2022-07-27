@@ -1,3 +1,5 @@
+using System;
+
 public interface ICollidableData : ISceneObjectData
 {
     float CollisionBoxWidth { get; set; }

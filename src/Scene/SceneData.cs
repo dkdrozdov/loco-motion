@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 class SceneData : ISceneData
 {
     public SceneData(IVector2D size, ISceneGeometry geometry, IEnumerable<ISceneObjectData> sceneObjects)

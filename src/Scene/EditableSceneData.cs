@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 class EditableSceneGeometry : ISceneGeometry
 {
     private List<ICollidableData> _platforms = new List<ICollidableData>();
