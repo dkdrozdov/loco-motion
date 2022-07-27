@@ -1,4 +1,7 @@
-public interface IEditableSceneData : ISceneData
+namespace LocoMotionServer
 {
-    public void AddPlatform(ICollidableData platform);
+    public interface IEditableSceneData : ISceneData
+    {
+        public void AddPlatform(ICollidableData platform);
+    }
 }

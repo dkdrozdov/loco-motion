@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 
-class SceneData : ISceneData
+namespace LocoMotionServer
 {
-    public SceneData(IVector2D size, ISceneGeometry geometry, IEnumerable<ISceneObjectData> sceneObjects)
+    class SceneData : ISceneData
     {
-        Size = size;
-        Geometry = geometry;
-        SceneObjects = sceneObjects;
+        public SceneData(IVector2D size, ISceneGeometry geometry, IEnumerable<ISceneObjectData> sceneObjects)
+        {
+            Size = size;
+            Geometry = geometry;
+            SceneObjects = sceneObjects;
+        }
+
+        public IVector2D Size { get; }
+
+        public ISceneGeometry Geometry { get; }
+
+        public IEnumerable<ISceneObjectData> SceneObjects { get; }
     }
-
-    public IVector2D Size { get; }
-
-    public ISceneGeometry Geometry { get; }
-
-    public IEnumerable<ISceneObjectData> SceneObjects { get; }
 }

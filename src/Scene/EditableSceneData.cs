@@ -1,45 +1,50 @@
 using System;
 using System.Collections.Generic;
 
-class EditableSceneGeometry : ISceneGeometry
+namespace LocoMotionServer
 {
-    private List<ICollidableData> _platforms = new List<ICollidableData>();
-    public IEnumerable<ICollidableData> Platforms => _platforms;
-
-    public void AddPlatform(ICollidableData platform)
+    class EditableSceneGeometry : ISceneGeometry
     {
-        _platforms.Add(platform);
-    }
-}
+        private List<ICollidableData> _platforms = new List<ICollidableData>();
+        public IEnumerable<ICollidableData> Platforms => _platforms;
 
-class EditableSceneData : IEditableSceneData
-{
-    private EditableSceneGeometry _geometry = new EditableSceneGeometry();
-    public ISceneGeometry Geometry => _geometry;
-    public IVector2D Size { get; private set; }
-
-    public IEnumerable<ISceneObjectData> SceneObjects { get; }
-
-    public EditableSceneData(EditableSceneGeometry geometry, IVector2D size, IEnumerable<ISceneObjectData> sceneObjects)
-    {
-        _geometry = geometry;
-        Size = size;
-        SceneObjects = sceneObjects;
-    }
-    public EditableSceneData(IVector2D size)
-    {
-        Size = size;
-        SceneObjects = new List<ISceneObjectData>();
+        public void AddPlatform(ICollidableData platform)
+        {
+            _platforms.Add(platform);
+        }
     }
 
-    public void AddPlatform(ICollidableData platform)
+    class EditableSceneData : IEditableSceneData
     {
-        _geometry.AddPlatform(platform);
-    }
+        private EditableSceneGeometry _geometry = new EditableSceneGeometry();
+        public ISceneGeometry Geometry => _geometry;
+        public IVector2D Size { get; private set; }
 
-    public void AddPlatform(ICollidable platform)
-    {
-        throw new NotImplementedException();
-    }
+        public IEnumerable<ISceneObjectData> SceneObjects { get; }
 
+        IVector2D ISceneData.Size => throw new NotImplementedException();
+
+        public EditableSceneData(EditableSceneGeometry geometry, IVector2D size, IEnumerable<ISceneObjectData> sceneObjects)
+        {
+            _geometry = geometry;
+            Size = size;
+            SceneObjects = sceneObjects;
+        }
+        public EditableSceneData(IVector2D size)
+        {
+            Size = size;
+            SceneObjects = new List<ISceneObjectData>();
+        }
+
+        public void AddPlatform(ICollidableData platform)
+        {
+            _geometry.AddPlatform(platform);
+        }
+
+        public void AddPlatform(ICollidable platform)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
 }

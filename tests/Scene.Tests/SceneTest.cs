@@ -1,12 +1,15 @@
-class SceneTest
+namespace LocoMotionServer
 {
-    static void Main()
+    class SceneTest
     {
-        Scene testScene = new Scene();
-        Vector2D size = new Vector2D(10f, 10f);
+        static void Main()
+        {
+            Scene testScene = new Scene();
+            Vector2D size = new Vector2D(10f, 10f);
 
-        IEditableSceneData esd = new EditableSceneData(size);
-        esd.AddPlatform(new Platform(1f, 2f));
-        testScene.LoadData(esd);
+            IEditableSceneData esd = new EditableSceneData(size);
+            esd.AddPlatform(new Platform(1f, 2f));
+            testScene.LoadData(esd);
+        }
     }
 }

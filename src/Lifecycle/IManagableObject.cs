@@ -1,6 +1,8 @@
-public interface IManagableObject
+namespace LocoMotionServer
 {
-    void OnCreate();
-    void OnDestroy();
+    public interface IManagableObject
+    {
+        void OnCreate();
+        void OnDestroy();
+    }
 }
-

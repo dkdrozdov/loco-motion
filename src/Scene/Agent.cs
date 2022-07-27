@@ -1,18 +1,21 @@
 using System;
 
-class Agent : PhysicalObject, IPhysicalObject
+namespace LocoMotionServer
 {
-    public Agent(string id, IVector2D position, IVector2D velocity, IVector2D face, float mass, IVector2D bottomLeft, IVector2D topRigth)
+    class Agent : PhysicalObject, IPhysicalObject
     {
-        this.id = id;
-        Position = position;
-        Velocity = velocity;
-        Rotation = face;
-        Mass = mass;
-    }
+        public Agent(string id, IVector2D position, IVector2D velocity, IVector2D face, float mass, IVector2D bottomLeft, IVector2D topRigth)
+        {
+            this.id = id;
+            Position = position;
+            Velocity = velocity;
+            Rotation = face;
+            Mass = mass;
+        }
 
-    public void OnCollision(ICollisionEvent e)
-    {
-        throw new NotImplementedException();
+        public void OnCollision(ICollisionEvent e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

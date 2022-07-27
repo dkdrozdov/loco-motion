@@ -1,20 +1,23 @@
-public interface IMessage
+namespace LocoMotionServer
 {
-  string Id { get; }
-}
+    public interface IMessage
+    {
+        string Id { get; }
+    }
 
-class UpdateMessage : IMessage
-{
-  public string Id => "update";
-  public ISceneData payload { get; }
+    class UpdateMessage : IMessage
+    {
+        public string Id => "update";
+        public ISceneData payload { get; }
 
-  public UpdateMessage(ISceneData payload)
-  {
-    this.payload = payload;
-  }
-}
+        public UpdateMessage(ISceneData payload)
+        {
+            this.payload = payload;
+        }
+    }
 
-public interface INetworkManager
-{
-  void broadcast(IMessage message);
+    public interface INetworkManager
+    {
+        void broadcast(IMessage message);
+    }
 }
