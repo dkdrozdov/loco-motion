@@ -44,7 +44,8 @@ namespace LocoMotionServer
 
         public void Stop()
         {
-
+            Console.WriteLine("Stopping server");
+            _clock.TickEvent -= new TickEventHandler(this.TickEventHandler);
         }
 
         private void TickEventHandler(IClock sender, TickEventArgs e)
