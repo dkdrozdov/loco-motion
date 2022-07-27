@@ -5,12 +5,13 @@ namespace LocoMotionServer
 {
     public class TickEventArgs
     {
-        public int virtualTimeDeltaMs { get; }
-        public int realTimeDeltaMs { get; }
+        public int VirtualTimeDeltaMs { get; }
+        public int RealTimeDeltaMs { get; }
 
-        public TickEventArgs(int virtualTimeDeltaMs)
+        public TickEventArgs(int virtualTimeDeltaMs, int realTimeDeltaMs)
         {
-            this.virtualTimeDeltaMs = virtualTimeDeltaMs;
+            this.VirtualTimeDeltaMs = virtualTimeDeltaMs;
+            RealTimeDeltaMs = realTimeDeltaMs;
         }
     }
 
@@ -18,7 +19,8 @@ namespace LocoMotionServer
 
     public interface IClock
     {
-        public event TickEventHandler? TickEvent;
+        event TickEventHandler? TickEvent;
+        float virtualTimeMultiplier { get; set; }
         void Run();
         void Stop();
     }
@@ -26,14 +28,15 @@ namespace LocoMotionServer
     public class Clock : IClock
     {
         public event TickEventHandler? TickEvent;
+        public float virtualTimeMultiplier { get; set; } = 1.0f;
         private PeriodicTimer _systemTimer;
         private bool _isRunning = false;
-        private int _frequencyMs;
+        private int _realFrequencyMs;
 
-        public Clock(int frequencyMs = 0)
+        public Clock(int realFrequencyMs = 50)
         {
-            _systemTimer = new PeriodicTimer(TimeSpan.FromMilliseconds(frequencyMs));
-            this._frequencyMs = frequencyMs;
+            _systemTimer = new PeriodicTimer(TimeSpan.FromMilliseconds(realFrequencyMs));
+            this._realFrequencyMs = realFrequencyMs;
         }
 
         public async void Run()
@@ -46,7 +49,7 @@ namespace LocoMotionServer
                 {
                     return;
                 }
-                var args = new TickEventArgs(_frequencyMs);
+                var args = new TickEventArgs((int)(_realFrequencyMs * virtualTimeMultiplier), _realFrequencyMs);
                 TickEvent?.Invoke(this, args);
             }
         }

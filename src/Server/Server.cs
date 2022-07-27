@@ -50,7 +50,7 @@ namespace LocoMotionServer
 
         private void TickEventHandler(IClock sender, TickEventArgs e)
         {
-            _accumulatedTimeDeltaMs += e.virtualTimeDeltaMs;
+            _accumulatedTimeDeltaMs += e.VirtualTimeDeltaMs;
             if (_accumulatedTimeDeltaMs <= _serverConfig.tickIntervalMs)
             {
                 return;
