@@ -12,6 +12,10 @@ namespace LocoMotionServer
     {
         public int Port { get; set; } = 8080;
         public int tickIntervalMs { get; } = 500;
+        public ServerConfig(int tickIntervalMs = 0)
+        {
+            this.tickIntervalMs = tickIntervalMs;
+        }
     }
 
     public class Server
@@ -20,22 +24,22 @@ namespace LocoMotionServer
         private IScene _scene;
         private IPhysics _physics;
         private IServerConfig _serverConfig;
-        private Clcok _clock;
+        private IClock _clock;
+        private int _accumulatedTimeDeltaMs = 0;
 
-        public Server(ILifecycleManager lm, IScene scene, IPhysics physics, IServerConfig config)
+        public Server(ILifecycleManager lm, IScene scene, IPhysics physics, IServerConfig config, IClock clock)
         {
             _lm = lm;
             _scene = scene;
             _physics = physics;
             _serverConfig = config;
-            _clock = new Clcok();
+            _clock = clock;
         }
 
         public void Start()
         {
             Console.WriteLine("Starting server");
             _clock.TickEvent += new TickEventHandler(this.TickEventHandler);
-            _clock.Run();
         }
 
         public void Stop()
@@ -43,9 +47,15 @@ namespace LocoMotionServer
 
         }
 
-        private void TickEventHandler(object sender, TickEventArgs e)
+        private void TickEventHandler(IClock sender, TickEventArgs e)
         {
-            Console.WriteLine("Processing tick");
+            _accumulatedTimeDeltaMs += e.virtualTimeDeltaMs;
+            if (_accumulatedTimeDeltaMs <= _serverConfig.tickIntervalMs)
+            {
+                return;
+            }
+            _accumulatedTimeDeltaMs = 0;
+            Console.WriteLine("Server processing tick");
         }
     }
 }
