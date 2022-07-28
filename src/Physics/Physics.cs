@@ -49,7 +49,7 @@ namespace LocoMotionServer
 
         public void OnMove(IMoveEvent e)
         {
-            // Noop.
+            Console.WriteLine($"New position (${e.To.X}, ${e.To.Y})");
         }
     }
 
@@ -62,6 +62,18 @@ namespace LocoMotionServer
     {
         IVector2D From { get; }
         IVector2D To { get; }
+    }
+
+    public class MoveEvent : IMoveEvent
+    {
+        public IVector2D From { get; }
+
+        public IVector2D To { get; }
+        public MoveEvent(IVector2D from, IVector2D to)
+        {
+            From = from;
+            To = to;
+        }
     }
 
     public interface IPhysics
@@ -110,7 +122,13 @@ namespace LocoMotionServer
                     fo.Velocity.Y = 0f;
                 }
                 // TODO@ekdrozdov: respect collisions.
+                var oldPosition = fo.Position;
                 fo.Position = (Vector2D)fo.Position + dt * (Vector2D)fo.Velocity;
+                if (fo.Position.X != oldPosition.X || fo.Position.Y != oldPosition.Y)
+                {
+                    var moveEvent = new MoveEvent(oldPosition, fo.Position);
+                    fo.OnMove(moveEvent);
+                }
             }
         }
     }

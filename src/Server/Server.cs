@@ -55,8 +55,14 @@ namespace LocoMotionServer
             {
                 return;
             }
-            _accumulatedTimeDeltaMs = 0;
             Console.WriteLine("Server processing tick");
+            long processingStartTimestamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+            _physics.step(_accumulatedTimeDeltaMs / 1000);
+
+            _accumulatedTimeDeltaMs = 0;
+            long processingEndTimestamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            Console.WriteLine($"Server processed tick took {processingEndTimestamp - processingStartTimestamp} ms");
         }
     }
 }

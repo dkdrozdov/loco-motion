@@ -17,8 +17,8 @@ namespace LocoMotionServer
 
     public class SceneObject : ISceneObject
     {
-        public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IVector2D Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string id { get; set; } = "NO_ID";
+        public IVector2D Position { get; set; } = new Vector2D();
 
         // TODO: Move to `ManagebleObject` class.
         public void OnCreate()
@@ -82,6 +82,7 @@ namespace LocoMotionServer
         {
             Size = sceneData.Size;
             Geometry = sceneData.Geometry;
+            _objects = sceneData.SceneObjects.ToList();
         }
         public void Add(ISceneObject sceneObject)
         {
@@ -107,7 +108,7 @@ namespace LocoMotionServer
 
         public IEnumerable<ISceneObject> All()
         {
-            throw new NotImplementedException();
+            return _objects;
         }
     }
 }
