@@ -33,6 +33,11 @@ namespace LocoMotionServer
         public string id { get; set; } = "NO_ID";
         public IVector2D Position { get; set; } = new Vector2D();
 
+        public SceneObject()
+        {
+
+        }
+
         public SceneObject(ISceneObjectData data)
         {
             id = data.id;
@@ -116,7 +121,14 @@ namespace LocoMotionServer
             Geometry = sceneData.Geometry;
             foreach (var sceneObjectData in sceneData.SceneObjects)
             {
-                _objects.Add(new SceneObject(sceneObjectData));
+                if (sceneObjectData is IPhysicalObject)
+                {
+                    _objects.Add(new PhysicalObject((IPhysicalObject)sceneObjectData));
+                }
+                else
+                {
+                    _objects.Add(new SceneObject(sceneObjectData));
+                }
             }
         }
         public void Add(ISceneObject sceneObject)

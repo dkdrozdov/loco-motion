@@ -42,22 +42,26 @@ namespace LocoMotionServer
 
     public class PhysicalObject : SceneObject, IPhysicalObject
     {
-        public PhysicalObject(ISceneObjectData data) : base(data)
+        public PhysicalObject() : base()
+        {
+        }
+
+        public PhysicalObject(IPhysicalObjectData data) : base(data)
         {
         }
 
         public IVector2D Velocity { get; set; } = new Vector2D();
         public IVector2D Rotation { get; set; } = new Vector2D();
         public IVector2D Force { get; set; } = new Vector2D();
-        public float Mass { get; set; } = 0f;
+        public float Mass { get; set; } = 1.0f;
         public float CollisionBoxWidth { get; set; } = 0f;
         public float CollisionBoxHeight { get; set; } = 0f;
-        public bool isGrounded { get; set; } = true;
+        public bool isGrounded { get; set; } = false;
         public IVector2D Momentum => Mass * (Vector2D)Velocity;
 
         public void OnMove(IMoveEvent e)
         {
-            Console.WriteLine($"New position (${e.To.X}, ${e.To.Y})");
+            Console.WriteLine($"New position ({e.To.X}, {e.To.Y})");
         }
     }
 
@@ -93,7 +97,7 @@ namespace LocoMotionServer
     {
         private static float g = 0.1f;
         private static float k = 0.2f;
-        private static float minVelocity = 0.01f;
+        private static float minVelocity = 0.005f;
         private IScene _scene;
 
         public Physics(IScene scene)
@@ -104,7 +108,7 @@ namespace LocoMotionServer
         public void step(float dt)
         {
             var sObjs = _scene.All();
-            var fObjs = _scene.All<PhysicalObject>();
+            var fObjs = _scene.All<IPhysicalObject>();
             foreach (var fo in fObjs)
             {
                 Vector2D acceleration;
