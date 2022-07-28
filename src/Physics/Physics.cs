@@ -15,6 +15,10 @@ namespace LocoMotionServer
 
     public class Collidable : SceneObject, ICollidable
     {
+        public Collidable(ISceneObjectData data) : base(data)
+        {
+        }
+
         public void OnCollision(ICollisionEvent e)
         {
             // Noop.
@@ -38,6 +42,10 @@ namespace LocoMotionServer
 
     public class PhysicalObject : SceneObject, IPhysicalObject
     {
+        public PhysicalObject(ISceneObjectData data) : base(data)
+        {
+        }
+
         public IVector2D Velocity { get; set; } = new Vector2D();
         public IVector2D Rotation { get; set; } = new Vector2D();
         public IVector2D Force { get; set; } = new Vector2D();
