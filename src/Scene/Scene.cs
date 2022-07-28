@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace LocoMotionServer
 {
@@ -12,8 +13,14 @@ namespace LocoMotionServer
 
     public class SceneObjectData : ISceneObjectData
     {
-        public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IVector2D Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public SceneObjectData(string id, IVector2D position)
+        {
+            this.id = id;
+            Position = position;
+        }
+
+        public string id { get; set; }
+        public IVector2D Position { get; set; }
     }
 
     public interface ISceneObject : ISceneObjectData, IManagableObject
@@ -45,7 +52,20 @@ namespace LocoMotionServer
 
         public ISceneObjectData Snapshot()
         {
-            throw new NotImplementedException();
+            return new SceneObjectData(id, Position);
+        }
+    }
+
+    public interface ISerializableData
+    {
+        string Serialize();
+    }
+
+    public class SerializableData : ISerializableData
+    {
+        public string Serialize()
+        {
+            return JsonSerializer.Serialize<object>(this);
         }
     }
 
@@ -114,7 +134,10 @@ namespace LocoMotionServer
             return _objects.Find(o => o.id == id)!;
         }
 
-        public ISceneData Snapshot() { throw new NotImplementedException(); }
+        public ISceneData Snapshot()
+        {
+            return new SceneData(Size, Geometry, SceneObjects);
+        }
 
         public IEnumerable<T> All<T>()
         {

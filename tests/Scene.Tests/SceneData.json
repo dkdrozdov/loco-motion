@@ -1,0 +1,15 @@
+{
+  "Size": {
+    "X": 10,
+    "Y": 10
+  },
+  "Geometry": {
+    "Platforms": [
+      {
+        "CollisionBoxWidth": 1,
+        "CollisionBoxHeight": 2
+      }
+    ]
+  },
+  "SceneObjects": []
+}
