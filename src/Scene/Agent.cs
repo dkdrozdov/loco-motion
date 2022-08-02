@@ -1,5 +1,3 @@
-using System;
-
 namespace LocoMotionServer
 {
     class Agent : PhysicalObject, IPhysicalObject
@@ -11,11 +9,6 @@ namespace LocoMotionServer
             Velocity = velocity;
             Rotation = face;
             Mass = mass;
-        }
-
-        public void OnCollision(ICollisionEvent e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

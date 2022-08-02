@@ -29,7 +29,7 @@ namespace LocoMotionServer
     {
     }
 
-    public interface IPhysicalObject : IPhysicalObjectData
+    public interface IPhysicalObject : IPhysicalObjectData, ICollidable
     {
         IVector2D Velocity { get; set; }
         IVector2D Rotation { get; set; }
@@ -58,6 +58,11 @@ namespace LocoMotionServer
         public float CollisionBoxHeight { get; set; } = 0f;
         public bool isGrounded { get; set; } = false;
         public IVector2D Momentum => Mass * (Vector2D)Velocity;
+
+        public void OnCollision(ICollisionEvent e)
+        {
+            throw new NotImplementedException();
+        }
 
         public void OnMove(IMoveEvent e)
         {
