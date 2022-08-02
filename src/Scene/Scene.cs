@@ -38,11 +38,8 @@ namespace LocoMotionServer
         ISceneObjectData Snapshot();
     }
 
-    public class SceneObject : ISceneObject
+    public class SceneObject : SceneObjectData, ISceneObject
     {
-        public string id { get; set; } = "NO_ID";
-        public IVector2D Position { get; set; } = new Vector2D();
-
         public SceneObject()
         {
 
