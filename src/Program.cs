@@ -53,43 +53,27 @@ namespace LocoMotionServer
 
         static void TestSerialization()
         {
-            //  Initializing scene
-            Vector2D size = new Vector2D(10f, 10f);
-            Scene scene = new Scene(size, new SceneGeometry());
+            //  Initializing
+            Collidable c = new Collidable(new SceneObjectData("id!!!", new Vector2D(1f, 2f)));
 
-            //  Serialize to .bin
-            using (var file = File.Create("scene.bin"))
+            //  Serializing to .bin
+            using (var file = File.Create("c.bin"))
             {
-                Serializer.Serialize(file, scene);
+                Serializer.Serialize(file, c);
             }
 
-            //  Deserializing and loading scene into new scene
-            Scene newScene = new Scene();
-            using (var file = File.OpenRead("scene.bin"))
+            //  Deserializing
+            Collidable newc;
+            using (var file = File.OpenRead("c.bin"))
             {
-                newScene = Serializer.Deserialize<Scene>(file);
+                newc = Serializer.Deserialize<Collidable>(file);
             }
         }
 
         static void Main(string[] args)
         {
             // MainLoop();
-            // TestSerialization();
-
-            SceneObject so = new SceneObject("id!!!", new Vector2D(1f, 2f));
-
-            //  Serialize to .bin
-            using (var file = File.Create("so.bin"))
-            {
-                Serializer.Serialize(file, so);
-            }
-
-            //  Deserializing
-            SceneObject newso;
-            using (var file = File.OpenRead("so.bin"))
-            {
-                newso = Serializer.Deserialize<SceneObject>(file);
-            }
+            TestSerialization();
         }
     }
 }

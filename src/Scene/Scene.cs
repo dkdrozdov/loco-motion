@@ -40,6 +40,7 @@ namespace LocoMotionServer
     }
 
     [ProtoContract]
+    [ProtoInclude(3, typeof(Collidable))]
     public class SceneObject : SceneObjectData, ISceneObject
     {
         public SceneObject() : base()

@@ -1,4 +1,5 @@
 using System;
+using ProtoBuf;
 
 namespace LocoMotionServer
 {
@@ -13,10 +14,15 @@ namespace LocoMotionServer
         void OnCollision(ICollisionEvent e);
     }
 
+    [ProtoContract]
     public class Collidable : SceneObject, ICollidable
     {
         public Collidable(ISceneObjectData data) : base(data)
         {
+        }
+        public Collidable() : base()
+        {
+
         }
 
         public void OnCollision(ICollisionEvent e)
