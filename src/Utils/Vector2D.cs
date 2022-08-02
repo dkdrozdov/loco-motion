@@ -1,5 +1,8 @@
+using ProtoBuf;
+
 namespace LocoMotionServer
 {
+    [ProtoContract]
     public class Vector2D : IVector2D
     {
         public Vector2D(float x, float y)
@@ -12,7 +15,9 @@ namespace LocoMotionServer
             X = default(float);
             Y = default(float);
         }
+        [ProtoMember(1)]
         public float X { get; set; }
+        [ProtoMember(2)]
         public float Y { get; set; }
         // TODO@ekdrozdov: type conversions from `IVector2D` to `Vector2D` could be avoided by replacing `IVector2D` with `Vector2D` in interfaces. Should I do this?
         public static Vector2D operator +(Vector2D lhs, Vector2D rhs) => new Vector2D(lhs.X + rhs.X, lhs.Y + rhs.Y);

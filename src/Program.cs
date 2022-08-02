@@ -9,6 +9,8 @@
 // - run server main loop
 
 using System;
+using System.IO;
+using ProtoBuf;
 
 namespace LocoMotionServer
 {
@@ -29,7 +31,7 @@ namespace LocoMotionServer
     }
     class Program
     {
-        static void Main(string[] args)
+        static void MainLoop()
         {
             Console.WriteLine("Starting server application");
             int CLOCK_FREQUENCY_MS = 100;
@@ -47,6 +49,47 @@ namespace LocoMotionServer
             server.Start();
             Console.WriteLine("Server application is running, press any key to shutdown");
             Console.Read();
+        }
+
+        static void TestSerialization()
+        {
+            //  Initializing scene
+            Vector2D size = new Vector2D(10f, 10f);
+            Scene scene = new Scene(size, new SceneGeometry());
+
+            //  Serialize to .bin
+            using (var file = File.Create("scene.bin"))
+            {
+                Serializer.Serialize(file, scene);
+            }
+
+            //  Deserializing and loading scene into new scene
+            Scene newScene = new Scene();
+            using (var file = File.OpenRead("scene.bin"))
+            {
+                newScene = Serializer.Deserialize<Scene>(file);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            // MainLoop();
+            // TestSerialization();
+
+
+            Vector2D v = new Vector2D(6f, 7f);
+            //  Serialize to .bin
+            using (var file = File.Create("v.bin"))
+            {
+                Serializer.Serialize(file, v);
+            }
+
+            Vector2D newv;
+            //  Deserializing and loading v into new v
+            using (var file = File.OpenRead("v.bin"))
+            {
+                newv = Serializer.Deserialize<Vector2D>(file);
+            }
         }
     }
 }

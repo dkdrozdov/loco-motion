@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using ProtoBuf;
 
 namespace LocoMotionServer
 {
@@ -96,11 +97,15 @@ namespace LocoMotionServer
         ISceneData Snapshot();
     }
 
+    [ProtoContract]
     public class Scene : IScene
     {
+        [ProtoMember(1)]
         public IVector2D Size { get; set; }
+        [ProtoMember(2)]
         public ISceneGeometry Geometry { get; set; }
 
+        [ProtoMember(3)]
         public IEnumerable<ISceneObjectData> SceneObjects => _objects;
 
         private List<ISceneObject> _objects = new List<ISceneObject>();
