@@ -4,15 +4,16 @@ namespace LocoMotionServer
 {
     class SceneGeometry : ISceneGeometry
     {
+        private List<ICollidableData> _platforms = new List<ICollidableData>();
+        public IEnumerable<ICollidableData> Platforms => _platforms;
 
-        public SceneGeometry(IEnumerable<ICollidableData> platforms)
+        public void AddPlatform(ICollidableData platform)
         {
-            Platforms = platforms;
+            _platforms.Add(platform);
         }
         public SceneGeometry()
         {
-            Platforms = new List<ICollidableData>();
+            _platforms = new List<ICollidableData>();
         }
-        public IEnumerable<ICollidableData> Platforms { get; }
     }
 }
