@@ -6,22 +6,31 @@ using ProtoBuf;
 
 namespace LocoMotionServer
 {
+    [ProtoContract]
+    [ProtoInclude(3, typeof(SceneObjectData))]
     public interface ISceneObjectData
     {
+        [ProtoMember(1)]
         string id { get; set; }
+        [ProtoMember(2)]
         IVector2D Position { get; set; }
     }
-
+    [ProtoContract]
     public class SceneObjectData : ISceneObjectData
     {
+        public SceneObjectData()
+        {
+
+        }
         public SceneObjectData(string id, IVector2D position)
         {
             this.id = id;
             Position = position;
         }
-
-        public string id { get; set; }
-        public IVector2D Position { get; set; }
+        [ProtoMember(1)]
+        public string id { get; set; } = "NO_ID";
+        [ProtoMember(2)]
+        public IVector2D Position { get; set; } = new Vector2D();
     }
 
     public interface ISceneObject : ISceneObjectData, IManagableObject
