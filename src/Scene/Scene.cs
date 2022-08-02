@@ -16,6 +16,7 @@ namespace LocoMotionServer
         IVector2D Position { get; set; }
     }
     [ProtoContract]
+    [ProtoInclude(3, typeof(SceneObject))]
     public class SceneObjectData : ISceneObjectData
     {
         public SceneObjectData()
@@ -38,17 +39,18 @@ namespace LocoMotionServer
         ISceneObjectData Snapshot();
     }
 
+    [ProtoContract]
     public class SceneObject : SceneObjectData, ISceneObject
     {
-        public SceneObject()
+        public SceneObject() : base()
         {
 
         }
-
-        public SceneObject(ISceneObjectData data)
+        public SceneObject(string id, IVector2D position) : base(id, position)
         {
-            id = data.id;
-            Position = data.Position;
+        }
+        public SceneObject(ISceneObjectData data) : base(data.id, data.Position)
+        {
         }
 
         // TODO: Move to `ManagebleObject` class.

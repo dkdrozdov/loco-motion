@@ -76,19 +76,19 @@ namespace LocoMotionServer
             // MainLoop();
             // TestSerialization();
 
-            SceneObjectData sod = new SceneObjectData("id!!!", new Vector2D(1f, 2f));
+            SceneObject so = new SceneObject("id!!!", new Vector2D(1f, 2f));
 
             //  Serialize to .bin
-            using (var file = File.Create("sod.bin"))
+            using (var file = File.Create("so.bin"))
             {
-                Serializer.Serialize(file, sod);
+                Serializer.Serialize(file, so);
             }
 
             //  Deserializing
-            SceneObjectData newsod;
-            using (var file = File.OpenRead("sod.bin"))
+            SceneObject newso;
+            using (var file = File.OpenRead("so.bin"))
             {
-                newsod = Serializer.Deserialize<SceneObjectData>(file);
+                newso = Serializer.Deserialize<SceneObject>(file);
             }
         }
     }
