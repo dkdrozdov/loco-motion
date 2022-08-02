@@ -8,6 +8,8 @@ namespace LocoMotionServer
 {
     [ProtoContract]
     [ProtoInclude(3, typeof(SceneObjectData))]
+    [ProtoInclude(4, typeof(ICollidableData))]
+    [ProtoInclude(5, typeof(ISceneObject))]
     public interface ISceneObjectData
     {
         [ProtoMember(1)]

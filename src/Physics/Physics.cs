@@ -3,9 +3,13 @@ using ProtoBuf;
 
 namespace LocoMotionServer
 {
+    [ProtoContract]
+    [ProtoInclude(3, typeof(IPhysicalObjectData))]
     public interface ICollidableData : ISceneObjectData
     {
+        [ProtoMember(1)]
         float CollisionBoxWidth { get; set; }
+        [ProtoMember(2)]
         float CollisionBoxHeight { get; set; }
     }
 
@@ -15,6 +19,7 @@ namespace LocoMotionServer
     }
 
     [ProtoContract]
+    [ProtoInclude(3, typeof(PhysicalObject))]
     public class Collidable : SceneObject, ICollidable
     {
         public Collidable(ISceneObjectData data) : base(data)
@@ -30,45 +35,55 @@ namespace LocoMotionServer
             // Noop.
         }
     }
-
+    [ProtoContract]
+    [ProtoInclude(1, typeof(IPhysicalObject))]
     public interface IPhysicalObjectData : ICollidableData
     {
     }
 
+    [ProtoContract]
+    [ProtoInclude(1, typeof(PhysicalObject))]
     public interface IPhysicalObject : IPhysicalObjectData, ICollidable
     {
+        [ProtoMember(2)]
         IVector2D Velocity { get; set; }
+        [ProtoMember(3)]
         IVector2D Rotation { get; set; }
+        [ProtoMember(4)]
         IVector2D Force { get; set; }
         IVector2D Momentum { get; }
+        [ProtoMember(5)]
         float Mass { get; set; }
+        [ProtoMember(6)]
         bool isGrounded { get; set; }
         void OnMove(IMoveEvent e);
     }
 
-    public class PhysicalObject : SceneObject, IPhysicalObject
+    [ProtoContract]
+    public class PhysicalObject : Collidable, IPhysicalObject
     {
         public PhysicalObject() : base()
         {
         }
 
-        public PhysicalObject(IPhysicalObjectData data) : base(data)
+        public PhysicalObject(ISceneObjectData data) : base(data)
         {
         }
-
+        [ProtoMember(3)]
         public IVector2D Velocity { get; set; } = new Vector2D();
+        [ProtoMember(4)]
         public IVector2D Rotation { get; set; } = new Vector2D();
+        [ProtoMember(5)]
         public IVector2D Force { get; set; } = new Vector2D();
+        [ProtoMember(6)]
         public float Mass { get; set; } = 1.0f;
+        [ProtoMember(7)]
         public float CollisionBoxWidth { get; set; } = 0f;
+        [ProtoMember(8)]
         public float CollisionBoxHeight { get; set; } = 0f;
+        [ProtoMember(9)]
         public bool isGrounded { get; set; } = false;
         public IVector2D Momentum => Mass * (Vector2D)Velocity;
-
-        public void OnCollision(ICollisionEvent e)
-        {
-            throw new NotImplementedException();
-        }
 
         public void OnMove(IMoveEvent e)
         {
