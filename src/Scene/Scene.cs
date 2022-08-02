@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using ProtoBuf;
 
 namespace LocoMotionServer
@@ -73,21 +72,9 @@ namespace LocoMotionServer
         }
     }
 
-    public interface ISerializableData
-    {
-        string Serialize();
-    }
-
-    public class SerializableData : ISerializableData
-    {
-        public string Serialize()
-        {
-            return JsonSerializer.Serialize<object>(this);
-        }
-    }
-
     public interface ISceneGeometry
     {
+        public void AddPlatform(ICollidableData platform);
         IEnumerable<ICollidableData> Platforms { get; }
     }
 
@@ -96,6 +83,8 @@ namespace LocoMotionServer
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
         IEnumerable<ISceneObjectData> SceneObjects { get; }
+        public void AddPlatform(ICollidableData platform);
+        public void AddObject(IPhysicalObject physicalObject);
     }
 
     public interface IScene : ISceneData
@@ -108,15 +97,11 @@ namespace LocoMotionServer
         ISceneData Snapshot();
     }
 
-    [ProtoContract]
+    //  TODO: make Scene inherited from SceneData
     public class Scene : IScene
     {
-        [ProtoMember(1)]
         public IVector2D Size { get; set; }
-        [ProtoMember(2)]
         public ISceneGeometry Geometry { get; set; }
-
-        [ProtoMember(3)]
         public IEnumerable<ISceneObjectData> SceneObjects => _objects;
 
         private List<ISceneObject> _objects = new List<ISceneObject>();
@@ -162,11 +147,6 @@ namespace LocoMotionServer
             return _objects.Find(o => o.id == id)!;
         }
 
-        public ISceneData Snapshot()
-        {
-            return new SceneData(Size, Geometry, SceneObjects);
-        }
-
         public IEnumerable<T> All<T>()
         {
             return _objects.OfType<T>();
@@ -175,6 +155,21 @@ namespace LocoMotionServer
         public IEnumerable<ISceneObject> All()
         {
             return _objects;
+        }
+
+        public void AddPlatform(ICollidableData platform)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddObject(IPhysicalObject physicalObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ISceneData Snapshot()
+        {
+            throw new NotImplementedException();
         }
     }
 }

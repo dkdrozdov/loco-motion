@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace LocoMotionServer
 {
-    class SceneGeometry : ISceneGeometry
+    public class SceneGeometry : ISceneGeometry
     {
         private List<ICollidableData> _platforms = new List<ICollidableData>();
         public IEnumerable<ICollidableData> Platforms => _platforms;

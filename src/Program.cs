@@ -16,11 +16,11 @@ namespace LocoMotionServer
 {
     class MyScene
     {
-        public EditableSceneData SceneData;
+        public SceneData SceneData;
         public MyScene()
         {
             var size = new Vector2D(20, 10);
-            SceneData = new EditableSceneData(size);
+            SceneData = new SceneData(size);
             var p1 = new Platform(3, 1);
             p1.Position = new Vector2D(3, 3);
             var o1 = new PhysicalObject();
