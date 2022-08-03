@@ -78,32 +78,27 @@ namespace LocoMotionServer
         IEnumerable<ICollidableData> Platforms { get; }
     }
 
-    public interface ISceneData
+    public interface IScene
     {
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
         IEnumerable<ISceneObjectData> SceneObjects { get; }
         public void AddPlatform(ICollidableData platform);
         public void AddObject(IPhysicalObject physicalObject);
-    }
-
-    public interface IScene : ISceneData
-    {
         void Add(ISceneObject o);
         void Remove(ISceneObject o);
         ISceneObject Query(string id);
         IEnumerable<T> All<T>();
         IEnumerable<ISceneObject> All();
-        ISceneData Snapshot();
     }
 
-    //  TODO: make Scene inherited from SceneData
     public class Scene : IScene
     {
-        public IVector2D Size { get; set; }
-        public ISceneGeometry Geometry { get; set; }
-        public IEnumerable<ISceneObjectData> SceneObjects => _objects;
-
+        public IVector2D Size { get; set; } = new Vector2D();
+        public ISceneGeometry Geometry { get; set; } = new SceneGeometry();
+        //  TODO: Fix SceneObjects' polymorphism
+        private List<IPhysicalObject> _physicalSceneObjects = new List<IPhysicalObject>();
+        public IEnumerable<ISceneObjectData> SceneObjects => _physicalSceneObjects;
         private List<ISceneObject> _objects = new List<ISceneObject>();
 
         public Scene(IVector2D size, ISceneGeometry geometry)
@@ -113,10 +108,9 @@ namespace LocoMotionServer
         }
         public Scene()
         {
-            Size = new Vector2D();
-            Geometry = new SceneGeometry();
+
         }
-        public void LoadData(ISceneData sceneData)
+        public void LoadData(IScene sceneData)
         {
             Size = sceneData.Size;
             Geometry = sceneData.Geometry;
@@ -159,17 +153,12 @@ namespace LocoMotionServer
 
         public void AddPlatform(ICollidableData platform)
         {
-            throw new NotImplementedException();
+            Geometry.AddPlatform(platform);
         }
 
         public void AddObject(IPhysicalObject physicalObject)
         {
-            throw new NotImplementedException();
-        }
-
-        public ISceneData Snapshot()
-        {
-            throw new NotImplementedException();
+            _physicalSceneObjects.Add(physicalObject);
         }
     }
 }

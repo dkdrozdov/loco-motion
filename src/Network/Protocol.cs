@@ -8,9 +8,9 @@ namespace LocoMotionServer
     class UpdateMessage : IMessage
     {
         public string Id => "update";
-        public ISceneData payload { get; }
+        public IScene payload { get; }
 
-        public UpdateMessage(ISceneData payload)
+        public UpdateMessage(IScene payload)
         {
             this.payload = payload;
         }

@@ -16,17 +16,18 @@ namespace LocoMotionServer
 {
     class MyScene
     {
-        public SceneData SceneData;
+        public Scene Scene;
         public MyScene()
         {
+            Scene = new Scene();
             var size = new Vector2D(20, 10);
-            SceneData = new SceneData(size);
             var p1 = new Platform(3, 1);
             p1.Position = new Vector2D(3, 3);
             var o1 = new PhysicalObject();
             o1.Position = new Vector2D(3, 6);
-            SceneData.AddPlatform(p1);
-            SceneData.AddObject(o1);
+            Scene.Size = size;
+            Scene.AddPlatform(p1);
+            Scene.AddObject(o1);
         }
     }
     class Program
@@ -38,9 +39,9 @@ namespace LocoMotionServer
             int SERVER_TICK_INTERVAL_MS = 500;
 
             var lm = new LifecycleManager();
+            //  TODO: load from file
             var loadedScene = new MyScene();
-            var scene = new Scene();
-            scene.LoadData(loadedScene.SceneData);
+            var scene = loadedScene.Scene;
             var physics = new Physics(scene);
             var config = new ServerConfig(SERVER_TICK_INTERVAL_MS);
             var clock = new Clock(CLOCK_FREQUENCY_MS);
