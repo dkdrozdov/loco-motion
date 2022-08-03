@@ -5,29 +5,23 @@ using ProtoBuf;
 
 namespace LocoMotionServer
 {
-    [ProtoContract]
-    [ProtoInclude(3, typeof(SceneObject))]
     public interface ISceneObject : IManagableObject
     {
-        [ProtoMember(1)]
         string id { get; set; }
-        [ProtoMember(2)]
         IVector2D Position { get; set; }
-        ISceneObject Snapshot();
     }
 
     [ProtoContract]
-    [ProtoInclude(3, typeof(Collidable))]
-    public class SceneObject : ISceneObject
+    [ProtoInclude(1, typeof(CollidableObject))]
+    public class SceneObject : ManagableObject, ISceneObject
     {
-        [ProtoMember(1)]
-        public string id { get; set; } = "NO_ID";
         [ProtoMember(2)]
+        public string id { get; set; } = "NO_ID";
+        [ProtoMember(3)]
         public IVector2D Position { get; set; } = new Vector2D();
-        public SceneObject() : base()
-        {
 
-        }
+        public SceneObject() : base() { }
+
         public SceneObject(string id, IVector2D position)
         {
             this.id = id;
@@ -38,30 +32,77 @@ namespace LocoMotionServer
             id = data.id;
             Position = data.Position;
         }
+    }
 
-        // TODO: Move to `ManagebleObject` class.
-        public void OnCreate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnDestroy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ISceneObject Snapshot()
-        {
-            return new SceneObject(id, Position);
-        }
+    public interface ICollidableObject : ISceneObject
+    {
+        public float CollisionBoxWidth { get; set; }
+        public float CollisionBoxHeight { get; set; }
+        void OnCollision(ICollisionEvent e);
     }
 
     [ProtoContract]
-    [ProtoInclude(2, typeof(SceneGeometry))]
-    public interface ISceneGeometry
+    [ProtoInclude(1, typeof(PhysicalObject))]
+    [ProtoInclude(2, typeof(Platform))]
+    public class CollidableObject : SceneObject, ICollidableObject
     {
-        public void AddPlatform(Collidable platform);
-        IEnumerable<Collidable> Platforms { get; }
+        [ProtoMember(3)]
+        public float CollisionBoxWidth { get; set; }
+        [ProtoMember(4)]
+        public float CollisionBoxHeight { get; set; }
+
+        public CollidableObject() : base() { }
+
+        public CollidableObject(ISceneObject data) : base(data) { }
+
+        public CollidableObject(ISceneObject data, float width, float height) : base(data)
+        {
+            CollisionBoxWidth = width;
+            CollisionBoxHeight = height;
+        }
+
+        public void OnCollision(ICollisionEvent e)
+        {
+            // Noop.
+        }
+    }
+
+    public interface IPhysicalObject : ICollidableObject
+    {
+        IVector2D Velocity { get; set; }
+        IVector2D Rotation { get; set; }
+        IVector2D Force { get; set; }
+        IVector2D Momentum { get; }
+        float Mass { get; set; }
+        bool isGrounded { get; set; }
+        void OnMove(IMoveEvent e);
+    }
+
+    [ProtoContract]
+    [ProtoInclude(1, typeof(AgentObject))]
+    public class PhysicalObject : CollidableObject, IPhysicalObject
+    {
+        [ProtoMember(2)]
+        public IVector2D Velocity { get; set; } = new Vector2D();
+        [ProtoMember(3)]
+        public IVector2D Rotation { get; set; } = new Vector2D();
+        [ProtoMember(4)]
+        public IVector2D Force { get; set; } = new Vector2D();
+        [ProtoMember(5)]
+        public float Mass { get; set; } = 1.0f;
+        [ProtoMember(6)]
+        public bool isGrounded { get; set; } = false;
+
+        public IVector2D Momentum => Mass * (Vector2D)Velocity;
+
+        public PhysicalObject() : base() { }
+
+        public PhysicalObject(ISceneObject data) : base(data) { }
+
+        public void OnMove(IMoveEvent e)
+        {
+            Console.WriteLine($"New position ({e.To.X}, {e.To.Y})");
+        }
     }
 
     public interface IScene
@@ -69,7 +110,7 @@ namespace LocoMotionServer
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
         IEnumerable<PhysicalObject> SceneObjects { get; }
-        public void AddPlatform(Collidable platform);
+        public void AddPlatform(CollidableObject platform);
         public void AddObject(PhysicalObject physicalObject);
         void Add(ISceneObject o);
         void Remove(ISceneObject o);
@@ -85,19 +126,19 @@ namespace LocoMotionServer
         public IVector2D Size { get; set; } = new Vector2D();
         [ProtoMember(2)]
         public ISceneGeometry Geometry { get; set; } = new SceneGeometry();
-        //  TODO: Fix SceneObjects' polymorphism
-        private List<PhysicalObject> _objects = new List<PhysicalObject>();
         [ProtoMember(3)]
         public IEnumerable<PhysicalObject> SceneObjects => _objects;
+
+        //  TODO: Fix SceneObjects' polymorphism
+        private List<PhysicalObject> _objects = new List<PhysicalObject>();
+
+        public Scene() { }
 
         public Scene(IVector2D size)
         {
             Size = size;
         }
-        public Scene()
-        {
 
-        }
         public void LoadData(IScene sceneData)
         {
             Size = sceneData.Size;
@@ -115,6 +156,7 @@ namespace LocoMotionServer
                 }
             }
         }
+
         public void Add(ISceneObject sceneObject)
         {
             _objects.Add((PhysicalObject)sceneObject);
@@ -140,7 +182,7 @@ namespace LocoMotionServer
             return _objects;
         }
 
-        public void AddPlatform(Collidable platform)
+        public void AddPlatform(CollidableObject platform)
         {
             Geometry.AddPlatform(platform);
         }

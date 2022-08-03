@@ -4,18 +4,27 @@ using ProtoBuf;
 namespace LocoMotionServer
 {
     [ProtoContract]
+    [ProtoInclude(1, typeof(SceneGeometry))]
+    public interface ISceneGeometry
+    {
+        public void AddPlatform(CollidableObject platform);
+        IEnumerable<CollidableObject> Platforms { get; }
+    }
+
+    [ProtoContract]
     public class SceneGeometry : ISceneGeometry
     {
-        private List<Collidable> _platforms = new List<Collidable>();
         [ProtoMember(1)]
-        public IEnumerable<Collidable> Platforms => _platforms;
+        public IEnumerable<CollidableObject> Platforms => _platforms;
 
-        public void AddPlatform(Collidable platform)
+        private List<CollidableObject> _platforms = new List<CollidableObject>();
+
+
+        public SceneGeometry() { }
+
+        public void AddPlatform(CollidableObject platform)
         {
             _platforms.Add(platform);
-        }
-        public SceneGeometry()
-        {
         }
     }
 }
