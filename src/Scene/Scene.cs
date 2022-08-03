@@ -17,7 +17,7 @@ namespace LocoMotionServer
     }
 
     [ProtoContract]
-    [ProtoInclude(3, typeof(CollidableData))]
+    [ProtoInclude(3, typeof(Collidable))]
     public class SceneObject : ISceneObject
     {
         [ProtoMember(1)]
@@ -60,8 +60,8 @@ namespace LocoMotionServer
     [ProtoInclude(2, typeof(SceneGeometry))]
     public interface ISceneGeometry
     {
-        public void AddPlatform(CollidableData platform);
-        IEnumerable<CollidableData> Platforms { get; }
+        public void AddPlatform(Collidable platform);
+        IEnumerable<Collidable> Platforms { get; }
     }
 
     public interface IScene
@@ -69,7 +69,7 @@ namespace LocoMotionServer
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
         IEnumerable<PhysicalObject> SceneObjects { get; }
-        public void AddPlatform(CollidableData platform);
+        public void AddPlatform(Collidable platform);
         public void AddObject(PhysicalObject physicalObject);
         void Add(ISceneObject o);
         void Remove(ISceneObject o);
@@ -140,7 +140,7 @@ namespace LocoMotionServer
             return _objects;
         }
 
-        public void AddPlatform(CollidableData platform)
+        public void AddPlatform(Collidable platform)
         {
             Geometry.AddPlatform(platform);
         }

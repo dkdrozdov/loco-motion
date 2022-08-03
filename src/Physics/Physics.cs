@@ -4,55 +4,28 @@ using ProtoBuf;
 namespace LocoMotionServer
 {
     [ProtoContract]
-    [ProtoInclude(4, typeof(CollidableData))]
-    public interface ICollidableData : ISceneObject
+    [ProtoInclude(3, typeof(Collidable))]
+    public interface ICollidable : ISceneObject
     {
         [ProtoMember(1)]
         public float CollisionBoxWidth { get; set; }
         [ProtoMember(2)]
         public float CollisionBoxHeight { get; set; }
-    }
-
-    [ProtoContract]
-    [ProtoInclude(4, typeof(Collidable))]
-    [ProtoInclude(3, typeof(Platform))]
-    public class CollidableData : SceneObject, ICollidableData
-    {
-        public CollidableData(ISceneObject data) : base(data)
-        {
-
-        }
-        public CollidableData(ISceneObject data, float width, float height) : base(data)
-        {
-            CollisionBoxWidth = width;
-            CollisionBoxHeight = height;
-        }
-        public CollidableData() : base()
-        {
-
-        }
-        [ProtoMember(5)]
-        public float CollisionBoxWidth { get; set; }
-        [ProtoMember(6)]
-        public float CollisionBoxHeight { get; set; }
-    }
-    [ProtoContract]
-    [ProtoInclude(3, typeof(Collidable))]
-    public interface ICollidable : ICollidableData
-    {
         void OnCollision(ICollisionEvent e);
     }
 
     [ProtoContract]
     [ProtoInclude(3, typeof(PhysicalObjectData))]
-    public class Collidable : CollidableData, ICollidable
+    [ProtoInclude(4, typeof(Platform))]
+    public class Collidable : SceneObject, ICollidable
     {
         public Collidable(ISceneObject data) : base(data)
         {
         }
-        public Collidable(ISceneObject data, float width, float height) : base(data, width, height)
+        public Collidable(ISceneObject data, float width, float height) : base(data)
         {
-
+            CollisionBoxWidth = width;
+            CollisionBoxHeight = height;
         }
         public Collidable() : base()
         {
@@ -63,9 +36,13 @@ namespace LocoMotionServer
         {
             // Noop.
         }
+        [ProtoMember(5)]
+        public float CollisionBoxWidth { get; set; }
+        [ProtoMember(6)]
+        public float CollisionBoxHeight { get; set; }
     }
 
-    public interface IPhysicalObjectData : ICollidableData
+    public interface IPhysicalObjectData : ICollidable
     {
     }
 

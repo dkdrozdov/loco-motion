@@ -3,7 +3,7 @@ using ProtoBuf;
 namespace LocoMotionServer
 {
     [ProtoContract]
-    class Platform : CollidableData
+    class Platform : Collidable
     {
         public Platform() : base()
         {

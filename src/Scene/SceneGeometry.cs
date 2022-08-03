@@ -6,11 +6,11 @@ namespace LocoMotionServer
     [ProtoContract]
     public class SceneGeometry : ISceneGeometry
     {
-        private List<CollidableData> _platforms = new List<CollidableData>();
+        private List<Collidable> _platforms = new List<Collidable>();
         [ProtoMember(1)]
-        public IEnumerable<CollidableData> Platforms => _platforms;
+        public IEnumerable<Collidable> Platforms => _platforms;
 
-        public void AddPlatform(CollidableData platform)
+        public void AddPlatform(Collidable platform)
         {
             _platforms.Add(platform);
         }
