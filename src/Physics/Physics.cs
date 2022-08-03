@@ -15,11 +15,17 @@ namespace LocoMotionServer
 
     [ProtoContract]
     [ProtoInclude(4, typeof(Collidable))]
+    [ProtoInclude(3, typeof(Platform))]
     public class CollidableData : SceneObject, ICollidableData
     {
         public CollidableData(ISceneObjectData data) : base(data)
         {
 
+        }
+        public CollidableData(ISceneObjectData data, float width, float height) : base(data)
+        {
+            CollisionBoxWidth = width;
+            CollisionBoxHeight = height;
         }
         public CollidableData() : base()
         {
@@ -43,6 +49,10 @@ namespace LocoMotionServer
     {
         public Collidable(ISceneObjectData data) : base(data)
         {
+        }
+        public Collidable(ISceneObjectData data, float width, float height) : base(data, width, height)
+        {
+
         }
         public Collidable() : base()
         {

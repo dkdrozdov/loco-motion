@@ -73,8 +73,8 @@ namespace LocoMotionServer
 
     public interface ISceneGeometry
     {
-        public void AddPlatform(ICollidableData platform);
-        IEnumerable<ICollidableData> Platforms { get; }
+        public void AddPlatform(CollidableData platform);
+        IEnumerable<CollidableData> Platforms { get; }
     }
 
     public interface IScene
@@ -82,7 +82,7 @@ namespace LocoMotionServer
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
         IEnumerable<ISceneObjectData> SceneObjects { get; }
-        public void AddPlatform(ICollidableData platform);
+        public void AddPlatform(CollidableData platform);
         public void AddObject(IPhysicalObject physicalObject);
         void Add(ISceneObject o);
         void Remove(ISceneObject o);
@@ -150,7 +150,7 @@ namespace LocoMotionServer
             return _objects;
         }
 
-        public void AddPlatform(ICollidableData platform)
+        public void AddPlatform(CollidableData platform)
         {
             Geometry.AddPlatform(platform);
         }
