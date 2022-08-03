@@ -3,15 +3,12 @@ using ProtoBuf;
 
 namespace LocoMotionServer
 {
-    [ProtoContract]
-    [ProtoInclude(1, typeof(SceneGeometry))]
     public interface ISceneGeometry
     {
         public void AddPlatform(CollidableObject platform);
         IEnumerable<CollidableObject> Platforms { get; }
     }
 
-    [ProtoContract]
     public class SceneGeometry : ISceneGeometry
     {
         [ProtoMember(1)]

@@ -44,7 +44,6 @@ namespace LocoMotionServer
 
         public void step(float dt)
         {
-            var sObjs = _scene.All();
             var fObjs = _scene.All<IPhysicalObject>();
             foreach (var fo in fObjs)
             {

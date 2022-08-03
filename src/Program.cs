@@ -11,6 +11,7 @@ using TestType = LocoMotionServer.Scene;
 using System;
 using System.IO;
 using ProtoBuf;
+using System.Collections.Generic;
 
 namespace LocoMotionServer
 {
@@ -26,7 +27,7 @@ namespace LocoMotionServer
             var o1 = new PhysicalObject();
             o1.Position = new Vector2D(3, 6);
             Scene.Size = size;
-            Scene.AddPlatform(p1);
+            Scene.AddObject(p1);
             Scene.AddObject(o1);
         }
     }
@@ -54,19 +55,26 @@ namespace LocoMotionServer
         static void TestSerialization()
         {
             //  Initializing
-            PhysicalObject po = new PhysicalObject(new SceneObject("id!!!", new Vector2D(1f, 2f)));
+            var o = new PhysicalObject();
+            o.Id = "id!!!";
+            o.Position = new Vector2D(1f, 2f);
+            o.Velocity = new Vector2D(3f, 4f);
+            o.Rotation = new Vector2D(5f, 6f);
+            o.Force = new Vector2D(7f, 8f);
+            o.Mass = 9f;
+            o.CollisionBoxWidth = 10f;
+            o.CollisionBoxHeight = 11f;
+            o.isGrounded = true;
 
-            po.Velocity = new Vector2D(3f, 4f);
-            po.Rotation = new Vector2D(5f, 6f);
-            po.Force = new Vector2D(7f, 8f);
-            po.Mass = 9f;
-            po.CollisionBoxWidth = 10f;
-            po.CollisionBoxHeight = 11f;
-            po.isGrounded = true;
+            var platform = new Platform();
+            platform.Id = "n2";
+            platform.Position = new Vector2D(1f, 2f);
+            platform.CollisionBoxHeight = 10f;
+            platform.CollisionBoxWidth = 11f;
 
             var obj = new TestType(new Vector2D(12f, 13f));
-            obj.AddPlatform(new Platform(new SceneObject("n2", new Vector2D(1f, 2f)), 10f, 11f));
-            obj.AddObject(po);
+            obj.AddObject(platform);
+            obj.AddObject(o);
 
             //  Serializing to .bin
             using (var file = File.Create("obj.bin"))
@@ -81,6 +89,29 @@ namespace LocoMotionServer
                 nobj = Serializer.Deserialize<TestType>(file);
             }
         }
+
+        static void TestSerializationMini()
+        {
+            IList<ISceneObject> objs = new List<ISceneObject>();
+            var o1 = new SceneObject();
+            o1.Id = "hello, world 1";
+            var o2 = new SceneObject();
+            o2.Id = "hello, world 2";
+            objs.Add(o1);
+            objs.Add(o2);
+            using (var file = File.Create("obj.bin"))
+            {
+                Serializer.Serialize(file, objs);
+            }
+
+            List<ISceneObject> dobjs;
+            using (var file = File.OpenRead("obj.bin"))
+            {
+                dobjs = Serializer.Deserialize<List<ISceneObject>>(file);
+            }
+            dobjs.ForEach(dobj => Console.WriteLine(dobj.Id));
+        }
+
 
         static void Main(string[] args)
         {
