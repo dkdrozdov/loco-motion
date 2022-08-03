@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>loco_motion</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>LocoMotionServer</RootNamespace>
+    <StartupObject>LocoMotionServer.Program</StartupObject>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  <ItemGroup>
+    <PackageReference Include="protobuf-net" Version="3.1.17"/>
+  </ItemGroup>
 </Project>

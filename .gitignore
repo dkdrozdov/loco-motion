@@ -1,3 +1,4 @@
 # Dotnet building artifacts
 bin/
 obj/
+*.bin

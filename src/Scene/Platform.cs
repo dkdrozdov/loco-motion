@@ -1,13 +1,17 @@
-class Platform : ICollidableData
+namespace LocoMotionServer
 {
-    public string id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public IVector2D Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public float CollisionBoxWidth { get; set; }
-    public float CollisionBoxHeight { get; set; }
-
-    public Platform(float collisionBoxWidth, float collisionBoxHeight)
+    public interface IPlatform : ICollidableObject
     {
-        CollisionBoxWidth = collisionBoxWidth;
-        CollisionBoxHeight = collisionBoxHeight;
+
+    }
+
+    public class Platform : CollidableObject
+    {
+        public Platform() : base() { }
+        public Platform(float collisionBoxWidth, float collisionBoxHeight)
+        {
+            CollisionBoxWidth = collisionBoxWidth;
+            CollisionBoxHeight = collisionBoxHeight;
+        }
     }
 }
