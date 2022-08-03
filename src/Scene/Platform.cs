@@ -14,7 +14,7 @@ namespace LocoMotionServer
             CollisionBoxWidth = collisionBoxWidth;
             CollisionBoxHeight = collisionBoxHeight;
         }
-        public Platform(SceneObjectData sceneObjectData, float width, float height) : base(sceneObjectData, width, height)
+        public Platform(SceneObject sceneObject, float width, float height) : base(sceneObject, width, height)
         {
         }
     }

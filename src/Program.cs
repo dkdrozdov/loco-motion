@@ -54,7 +54,7 @@ namespace LocoMotionServer
         static void TestSerialization()
         {
             //  Initializing
-            PhysicalObject po = new PhysicalObject(new SceneObjectData("id!!!", new Vector2D(1f, 2f)));
+            PhysicalObject po = new PhysicalObject(new SceneObject("id!!!", new Vector2D(1f, 2f)));
 
             po.Velocity = new Vector2D(3f, 4f);
             po.Rotation = new Vector2D(5f, 6f);
@@ -65,7 +65,7 @@ namespace LocoMotionServer
             po.isGrounded = true;
 
             var obj = new TestType(new Vector2D(12f, 13f));
-            obj.AddPlatform(new Platform(new SceneObjectData("n2", new Vector2D(1f, 2f)), 10f, 11f));
+            obj.AddPlatform(new Platform(new SceneObject("n2", new Vector2D(1f, 2f)), 10f, 11f));
             obj.AddObject(po);
 
             //  Serializing to .bin

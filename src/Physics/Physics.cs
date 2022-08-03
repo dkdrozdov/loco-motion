@@ -18,11 +18,11 @@ namespace LocoMotionServer
     [ProtoInclude(3, typeof(Platform))]
     public class CollidableData : SceneObject, ICollidableData
     {
-        public CollidableData(ISceneObjectData data) : base(data)
+        public CollidableData(ISceneObject data) : base(data)
         {
 
         }
-        public CollidableData(ISceneObjectData data, float width, float height) : base(data)
+        public CollidableData(ISceneObject data, float width, float height) : base(data)
         {
             CollisionBoxWidth = width;
             CollisionBoxHeight = height;
@@ -47,10 +47,10 @@ namespace LocoMotionServer
     [ProtoInclude(3, typeof(PhysicalObjectData))]
     public class Collidable : CollidableData, ICollidable
     {
-        public Collidable(ISceneObjectData data) : base(data)
+        public Collidable(ISceneObject data) : base(data)
         {
         }
-        public Collidable(ISceneObjectData data, float width, float height) : base(data, width, height)
+        public Collidable(ISceneObject data, float width, float height) : base(data, width, height)
         {
 
         }
@@ -73,7 +73,7 @@ namespace LocoMotionServer
     [ProtoInclude(1, typeof(PhysicalObject))]
     public class PhysicalObjectData : Collidable, IPhysicalObjectData
     {
-        public PhysicalObjectData(ISceneObjectData data) : base(data)
+        public PhysicalObjectData(ISceneObject data) : base(data)
         {
         }
         public PhysicalObjectData() : base()
@@ -106,7 +106,7 @@ namespace LocoMotionServer
         {
         }
 
-        public PhysicalObject(ISceneObjectData data) : base(data)
+        public PhysicalObject(ISceneObject data) : base(data)
         {
         }
         [ProtoMember(3)]

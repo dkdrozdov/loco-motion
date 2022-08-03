@@ -6,52 +6,37 @@ using ProtoBuf;
 namespace LocoMotionServer
 {
     [ProtoContract]
-    [ProtoInclude(3, typeof(SceneObjectData))]
-    [ProtoInclude(5, typeof(ISceneObject))]
-    public interface ISceneObjectData
+    [ProtoInclude(3, typeof(SceneObject))]
+    public interface ISceneObject : IManagableObject
     {
         [ProtoMember(1)]
         string id { get; set; }
         [ProtoMember(2)]
         IVector2D Position { get; set; }
-    }
-    [ProtoContract]
-    [ProtoInclude(3, typeof(SceneObject))]
-    public class SceneObjectData : ISceneObjectData
-    {
-        public SceneObjectData()
-        {
-
-        }
-        public SceneObjectData(string id, IVector2D position)
-        {
-            this.id = id;
-            Position = position;
-        }
-        [ProtoMember(1)]
-        public string id { get; set; } = "NO_ID";
-        [ProtoMember(2)]
-        public IVector2D Position { get; set; } = new Vector2D();
-    }
-
-    public interface ISceneObject : ISceneObjectData, IManagableObject
-    {
-        ISceneObjectData Snapshot();
+        ISceneObject Snapshot();
     }
 
     [ProtoContract]
     [ProtoInclude(3, typeof(CollidableData))]
-    public class SceneObject : SceneObjectData, ISceneObject
+    public class SceneObject : ISceneObject
     {
+        [ProtoMember(1)]
+        public string id { get; set; } = "NO_ID";
+        [ProtoMember(2)]
+        public IVector2D Position { get; set; } = new Vector2D();
         public SceneObject() : base()
         {
 
         }
-        public SceneObject(string id, IVector2D position) : base(id, position)
+        public SceneObject(string id, IVector2D position)
         {
+            this.id = id;
+            Position = position;
         }
-        public SceneObject(ISceneObjectData data) : base(data.id, data.Position)
+        public SceneObject(ISceneObject data)
         {
+            id = data.id;
+            Position = data.Position;
         }
 
         // TODO: Move to `ManagebleObject` class.
@@ -65,9 +50,9 @@ namespace LocoMotionServer
             throw new NotImplementedException();
         }
 
-        public ISceneObjectData Snapshot()
+        public ISceneObject Snapshot()
         {
-            return new SceneObjectData(id, Position);
+            return new SceneObject(id, Position);
         }
     }
 
