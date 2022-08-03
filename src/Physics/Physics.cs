@@ -15,7 +15,7 @@ namespace LocoMotionServer
     }
 
     [ProtoContract]
-    [ProtoInclude(3, typeof(PhysicalObjectData))]
+    [ProtoInclude(3, typeof(PhysicalObject))]
     [ProtoInclude(4, typeof(Platform))]
     public class Collidable : SceneObject, ICollidable
     {
@@ -42,42 +42,19 @@ namespace LocoMotionServer
         public float CollisionBoxHeight { get; set; }
     }
 
-    public interface IPhysicalObjectData : ICollidable
+    public interface IPhysicalObject : ICollidable
     {
-    }
-
-    [ProtoContract]
-    [ProtoInclude(1, typeof(PhysicalObject))]
-    public class PhysicalObjectData : Collidable, IPhysicalObjectData
-    {
-        public PhysicalObjectData(ISceneObject data) : base(data)
-        {
-        }
-        public PhysicalObjectData() : base()
-        {
-        }
-    }
-
-    // [ProtoContract]
-    // [ProtoInclude(1, typeof(PhysicalObject))]
-    public interface IPhysicalObject : IPhysicalObjectData, ICollidable
-    {
-        [ProtoMember(2)]
         IVector2D Velocity { get; set; }
-        [ProtoMember(3)]
         IVector2D Rotation { get; set; }
-        [ProtoMember(4)]
         IVector2D Force { get; set; }
         IVector2D Momentum { get; }
-        [ProtoMember(5)]
         float Mass { get; set; }
-        [ProtoMember(6)]
         bool isGrounded { get; set; }
         void OnMove(IMoveEvent e);
     }
 
     [ProtoContract]
-    public class PhysicalObject : PhysicalObjectData, IPhysicalObject
+    public class PhysicalObject : Collidable, IPhysicalObject
     {
         public PhysicalObject() : base()
         {
