@@ -7,7 +7,7 @@
 // - init server config
 // - init server
 // - run server main loop
-using TestType = LocoMotionServer.SceneGeometry;
+using TestType = LocoMotionServer.Scene;
 using System;
 using System.IO;
 using ProtoBuf;
@@ -63,8 +63,11 @@ namespace LocoMotionServer
             po.CollisionBoxWidth = 10f;
             po.CollisionBoxHeight = 11f;
             po.isGrounded = true;
-            var obj = new TestType();
-            obj.AddPlatform(new Platform(new SceneObjectData("id!!!", new Vector2D(1f, 2f)), 10f, 11f));
+
+            var obj = new TestType(new Vector2D(12f, 13f));
+            obj.AddPlatform(new Platform(new SceneObjectData("n2", new Vector2D(1f, 2f)), 10f, 11f));
+            obj.AddObject(po);
+
             //  Serializing to .bin
             using (var file = File.Create("obj.bin"))
             {

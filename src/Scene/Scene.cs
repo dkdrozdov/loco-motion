@@ -71,6 +71,8 @@ namespace LocoMotionServer
         }
     }
 
+    [ProtoContract]
+    [ProtoInclude(2, typeof(SceneGeometry))]
     public interface ISceneGeometry
     {
         public void AddPlatform(CollidableData platform);
@@ -81,9 +83,9 @@ namespace LocoMotionServer
     {
         IVector2D Size { get; }
         ISceneGeometry Geometry { get; }
-        IEnumerable<ISceneObjectData> SceneObjects { get; }
+        IEnumerable<PhysicalObject> SceneObjects { get; }
         public void AddPlatform(CollidableData platform);
-        public void AddObject(IPhysicalObject physicalObject);
+        public void AddObject(PhysicalObject physicalObject);
         void Add(ISceneObject o);
         void Remove(ISceneObject o);
         ISceneObject Query(string id);
@@ -91,19 +93,21 @@ namespace LocoMotionServer
         IEnumerable<ISceneObject> All();
     }
 
+    [ProtoContract]
     public class Scene : IScene
     {
+        [ProtoMember(1)]
         public IVector2D Size { get; set; } = new Vector2D();
+        [ProtoMember(2)]
         public ISceneGeometry Geometry { get; set; } = new SceneGeometry();
         //  TODO: Fix SceneObjects' polymorphism
-        private List<IPhysicalObject> _physicalSceneObjects = new List<IPhysicalObject>();
-        public IEnumerable<ISceneObjectData> SceneObjects => _physicalSceneObjects;
-        private List<ISceneObject> _objects = new List<ISceneObject>();
+        private List<PhysicalObject> _objects = new List<PhysicalObject>();
+        [ProtoMember(3)]
+        public IEnumerable<PhysicalObject> SceneObjects => _objects;
 
-        public Scene(IVector2D size, ISceneGeometry geometry)
+        public Scene(IVector2D size)
         {
             Size = size;
-            Geometry = geometry;
         }
         public Scene()
         {
@@ -115,24 +119,25 @@ namespace LocoMotionServer
             Geometry = sceneData.Geometry;
             foreach (var sceneObjectData in sceneData.SceneObjects)
             {
-                if (sceneObjectData is IPhysicalObject)
+                if (sceneObjectData is PhysicalObject)
                 {
-                    _objects.Add(new PhysicalObject((IPhysicalObject)sceneObjectData));
+                    _objects.Add(new PhysicalObject(sceneObjectData));
                 }
                 else
                 {
-                    _objects.Add(new SceneObject(sceneObjectData));
+                    // TODO: Fix SceneObjects
+                    // _objects.Add(new SceneObject(sceneObjectData));
                 }
             }
         }
         public void Add(ISceneObject sceneObject)
         {
-            _objects.Add(sceneObject);
+            _objects.Add((PhysicalObject)sceneObject);
         }
 
         public void Remove(ISceneObject sceneObject)
         {
-            _objects.Remove(sceneObject);
+            _objects.Remove((PhysicalObject)sceneObject);
         }
 
         public ISceneObject Query(string id)
@@ -155,9 +160,9 @@ namespace LocoMotionServer
             Geometry.AddPlatform(platform);
         }
 
-        public void AddObject(IPhysicalObject physicalObject)
+        public void AddObject(PhysicalObject physicalObject)
         {
-            _physicalSceneObjects.Add(physicalObject);
+            _objects.Add(physicalObject);
         }
     }
 }
