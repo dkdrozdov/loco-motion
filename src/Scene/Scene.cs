@@ -7,7 +7,6 @@ namespace LocoMotionServer
 {
     [ProtoContract]
     [ProtoInclude(3, typeof(SceneObjectData))]
-    [ProtoInclude(4, typeof(ICollidableData))]
     [ProtoInclude(5, typeof(ISceneObject))]
     public interface ISceneObjectData
     {
@@ -41,7 +40,7 @@ namespace LocoMotionServer
     }
 
     [ProtoContract]
-    [ProtoInclude(3, typeof(Collidable))]
+    [ProtoInclude(3, typeof(CollidableData))]
     public class SceneObject : SceneObjectData, ISceneObject
     {
         public SceneObject() : base()

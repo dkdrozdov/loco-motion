@@ -15,5 +15,20 @@ namespace LocoMotionServer
             CollisionBoxWidth = collisionBoxWidth;
             CollisionBoxHeight = collisionBoxHeight;
         }
+
+        public void OnCreate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDestroy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ISceneObjectData Snapshot()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
