@@ -44,4 +44,19 @@ Scene specific resources
   * standing (sprite)
   * standing (animation) (standing)
 * ground texture (texture item)
-  * wall texture (texture item)
+* wall texture (texture item)
+
+Scene definition
+* resource pack
+  * ground texture
+  * wall texture
+  * fan (animatable item)
+    * rotation 1 (sprite)
+    * rotation 2 (sprite)
+    * rotating (animation) (rotation 1, rotation 2)
+* objects
+  * platform 1 (ground texture, position, size)
+  * platform 2 (ground texture, position, size)
+  * wall 1 (wall texture, position, size)
+  * wall 2 (wall texture, position, size)
+  * wall 3 (wall texture, position, size)

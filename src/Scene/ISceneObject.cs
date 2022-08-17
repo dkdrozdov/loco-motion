@@ -27,4 +27,16 @@ namespace LocoMotionServer
             Position = position;
         }
     }
+
+    public interface IRenderableSceneObject : ISceneObject
+    {
+        // Texture or Animatable
+        int ResourceItemKind { get; }
+    }
+
+    public interface IAnimatableObject : ISceneObject
+    {
+        enum Animations { };
+    }
+
 }
