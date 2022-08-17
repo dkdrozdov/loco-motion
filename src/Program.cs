@@ -12,6 +12,9 @@ using System;
 using System.IO;
 using ProtoBuf;
 using System.Collections.Generic;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 
 namespace LocoMotionServer
 {
@@ -116,7 +119,23 @@ namespace LocoMotionServer
         static void Main(string[] args)
         {
             // MainLoop();
-            TestSerialization();
+            // TestSerialization();
+            var nativeWindowSettings = new NativeWindowSettings()
+            {
+                Size = new Vector2i(800, 600),
+                Title = "loco-motion",
+                Flags = ContextFlags.ForwardCompatible,
+            };
+
+            SceneRenderer renderer = new SceneRenderer();
+            using (var window = new Window(renderer, GameWindowSettings.Default, nativeWindowSettings))
+            {
+                ResourceItemRenderer o = new ResourceItemRenderer();
+                o.LoadTexture("resources/sprite.png");
+                renderer.AddObject(o);
+
+                window.Run();
+            }
         }
     }
 }
