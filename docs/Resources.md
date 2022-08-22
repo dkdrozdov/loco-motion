@@ -60,3 +60,13 @@ Scene definition
   * wall 1 (wall texture, position, size)
   * wall 2 (wall texture, position, size)
   * wall 3 (wall texture, position, size)
+
+Scene loading
+1. Statically define resource packs
+1. Statically define scene
+1. ResourceManager Load(SceneMainfest) call
+    1. Resolve scene manifest
+    1. For each resource pack resolve resource pack manifest
+    1. Initialize scene objects in scene
+1. ResourceManager InitRenderer(IRenderer) call
+    1. IRenderer Init(IResourcePack, IScene)

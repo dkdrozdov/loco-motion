@@ -3,18 +3,18 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
 
-public class Window : GameWindow
+public class LocoMotionGameWindow : GameWindow
 {
-    public Window(SceneRenderer renderer, GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
+    public LocoMotionGameWindow(IRenderer renderer, GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
         : base(gameWindowSettings, nativeWindowSettings)
     {
-        SceneRenderer = renderer;
+        _sceneRenderer = renderer;
     }
-    public SceneRenderer SceneRenderer { get; set; }
+    private IRenderer _sceneRenderer;
     protected override void OnLoad()
     {
         base.OnLoad();
-        SceneRenderer.OnLoad();
+        _sceneRenderer.OnLoad();
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     }
 
@@ -23,7 +23,7 @@ public class Window : GameWindow
         base.OnRenderFrame(e);
 
         GL.Clear(ClearBufferMask.ColorBufferBit);
-        SceneRenderer.Render();
+        _sceneRenderer.OnRender();
 
         SwapBuffers();
     }

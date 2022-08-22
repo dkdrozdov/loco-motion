@@ -12,9 +12,6 @@ using System;
 using System.IO;
 using ProtoBuf;
 using System.Collections.Generic;
-using OpenTK.Windowing.Desktop;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
 
 namespace LocoMotionServer
 {
@@ -116,26 +113,29 @@ namespace LocoMotionServer
         }
 
 
+        static void TestResources()
+        {
+            ResourcePack resourcePack = new ResourcePack(
+                new ResourceItem(ResourceItemKind.Sprite, "resources/sprite.png"),
+                new ResourceItem(ResourceItemKind.Sprite, "resources/sprite2.png"));
+
+            Scene scene = new Scene();
+            scene.AddObject(new Cat());
+            scene.AddObject(new FlippedCat());
+
+            IRenderer renderer = new GLRenderer();
+            ResourceManager resourceManager = new ResourceManager(resourcePack);
+            resourceManager.LoadScene(new SceneManifest(), resourcePack, scene);
+            resourceManager.InitRenderer(renderer);
+
+            WindowManager.StartWindow(renderer);
+        }
+
         static void Main(string[] args)
         {
             // MainLoop();
             // TestSerialization();
-            var nativeWindowSettings = new NativeWindowSettings()
-            {
-                Size = new Vector2i(800, 600),
-                Title = "loco-motion",
-                Flags = ContextFlags.ForwardCompatible,
-            };
-
-            SceneRenderer renderer = new SceneRenderer();
-            using (var window = new Window(renderer, GameWindowSettings.Default, nativeWindowSettings))
-            {
-                ResourceItemRenderer o = new ResourceItemRenderer();
-                o.LoadTexture("resources/sprite.png");
-                renderer.AddObject(o);
-
-                window.Run();
-            }
+            TestResources();
         }
     }
 }

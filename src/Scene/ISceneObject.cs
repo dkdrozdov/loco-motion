@@ -8,6 +8,9 @@ namespace LocoMotionServer
     {
         string Id { get; set; }
         IVector2D Position { get; set; }
+
+        string TextureId { get; set; }
+        public void Render(IRenderer renderer);
     }
 
     [ProtoContract]
@@ -18,6 +21,7 @@ namespace LocoMotionServer
         public string Id { get; set; } = "NO_ID";
         [ProtoMember(3)]
         public IVector2D Position { get; set; } = new Vector2D();
+        public string TextureId { get; set; }
 
         public SceneObject() : base() { }
 
@@ -26,12 +30,11 @@ namespace LocoMotionServer
             this.Id = id;
             Position = position;
         }
-    }
 
-    public interface IRenderableSceneObject : ISceneObject
-    {
-        // Texture or Animatable
-        int ResourceItemKind { get; }
+        public virtual void Render(IRenderer renderer)
+        {
+
+        }
     }
 
     public interface IAnimatableObject : ISceneObject
@@ -39,4 +42,30 @@ namespace LocoMotionServer
         enum Animations { };
     }
 
+    public class Ground : TexturedRectangle
+    {
+        public Ground()
+        {
+            TextureId = "ground.jpeg";
+        }
+        public int ResourceItemKind => throw new System.NotImplementedException();
+    }
+
+    public class Cat : SpritePoint
+    {
+        public Cat()
+        {
+            TextureId = "resources/sprite.png";
+        }
+
+    }
+
+    public class FlippedCat : SpritePoint
+    {
+        public FlippedCat()
+        {
+            TextureId = "resources/sprite2.png";
+        }
+
+    }
 }

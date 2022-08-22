@@ -1,13 +1,16 @@
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-public class ResourceItemRenderer : IResourceItemRenderer
+interface ISceneObjectRenderer
 {
-    public float Rotation { get; set; }
-    public Vector2 Size { get; set; } = new Vector2();
-    public Vector2 Position { get; set; } = new Vector2();
-    ITexture? _texture;
-    private IShader? _shader;
+    public void OnLoad();
+    public void OnRender();
+    public void SetProjection(Matrix4 projection);
+    public void SetView(Matrix4 view);
+}
+
+class SceneObjectRenderer : ISceneObjectRenderer
+{
     private readonly float[] _vertices =
     {
             // Position         Texture coordinates
@@ -21,20 +24,26 @@ public class ResourceItemRenderer : IResourceItemRenderer
             0, 1, 3,
             1, 2, 3
         };
-
+    ITexture? _texture;
+    private IShader? _shader;
     private int _elementBufferObject;
-
     private int _vertexBufferObject;
-
     private int _vertexArrayObject;
-    public void LoadTexture(string path)
+
+    public SceneObjectRenderer(byte[] textureData)
     {
-        Size = new Vector2(1f, 1f);
-        _texture = new Texture(Size.X, Size.Y);
-        _texture.LoadFromFile(path);
+        _texture = new Texture(textureData);
     }
+
+    public SceneObjectRenderer(ITexture texture)
+    {
+        _texture = texture;
+    }
+
     public void OnLoad()
     {
+        _texture?.OnLoad();
+
         _vertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(_vertexArrayObject);
 
@@ -60,20 +69,9 @@ public class ResourceItemRenderer : IResourceItemRenderer
         _texture?.Use(TextureUnit.Texture0);
     }
 
-    public void SetProjection(Matrix4 projection)
-    {
-        _shader!.SetMatrix4("projection", projection);
-    }
-
-    public void SetView(Matrix4 view)
-    {
-        _shader!.SetMatrix4("view", view);
-    }
-
-    public void Render()
+    public void OnRender()
     {
         GL.BindVertexArray(_vertexArrayObject);
-
 
         Matrix4 model = Matrix4.Identity;
         model *= Matrix4.CreateTranslation(0.0f, 0.0f, 0.0f);
@@ -90,5 +88,15 @@ public class ResourceItemRenderer : IResourceItemRenderer
         _shader!.Use();
 
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+    }
+
+    public void SetProjection(Matrix4 projection)
+    {
+        _shader!.SetMatrix4("projection", projection);
+    }
+
+    public void SetView(Matrix4 view)
+    {
+        _shader!.SetMatrix4("view", view);
     }
 }
