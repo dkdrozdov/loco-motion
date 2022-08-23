@@ -116,6 +116,10 @@ namespace LocoMotionServer
         {
             // Define scene objects
             Cat cat = new Cat();
+            cat.Position.X = 0.5f;
+            cat.Position.Y = 0.5f;
+            cat.Rotation = 1.0f;
+            cat.Scale = 0.5f;
             FlippedCat flippedCat = new FlippedCat();
 
             // Init and serialize TestScene

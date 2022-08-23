@@ -59,11 +59,11 @@ public class GLRenderer : IRenderer
 
     public void Render(ITexturedRectangle texturedRectangle)
     {
-        _objectRenderers[texturedRectangle.TextureId].OnRender();
+        _objectRenderers[texturedRectangle.TextureId].OnRender(texturedRectangle);
     }
 
     public void Render(ISpritePoint spritePoint)
     {
-        _objectRenderers[spritePoint.TextureId].OnRender();
+        _objectRenderers[spritePoint.TextureId].OnRender(spritePoint);
     }
 }

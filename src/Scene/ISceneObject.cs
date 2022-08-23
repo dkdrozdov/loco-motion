@@ -8,7 +8,8 @@ namespace LocoMotionServer
     {
         string Id { get; set; }
         IVector2D Position { get; set; }
-
+        public float Scale { get; set; }
+        public float Rotation { get; set; }
         string TextureId { get; set; }
         public void Render(IRenderer renderer);
     }
@@ -21,6 +22,8 @@ namespace LocoMotionServer
         public string Id { get; set; } = "NO_ID";
         [ProtoMember(3)]
         public IVector2D Position { get; set; } = new Vector2D();
+        public float Scale { get; set; } = 1.0f;
+        public float Rotation { get; set; } = 0f;
         public string TextureId { get; set; } = "";
 
         public SceneObject() : base() { }

@@ -1,10 +1,12 @@
+using LocoMotionServer;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
 interface ISceneObjectRenderer
 {
     public void OnLoad();
-    public void OnRender();
+    public void OnRender(ITexturedRectangle texturedRectangle);
+    public void OnRender(ISpritePoint spritePoint);
     public void SetProjection(Matrix4 projection);
     public void SetView(Matrix4 view);
 }
@@ -69,12 +71,14 @@ class SceneObjectRenderer : ISceneObjectRenderer
         _texture?.Use(TextureUnit.Texture0);
     }
 
-    public void OnRender()
+    public void OnRender(ISpritePoint spritePoint)
     {
         GL.BindVertexArray(_vertexArrayObject);
 
         Matrix4 model = Matrix4.Identity;
-        model *= Matrix4.CreateTranslation(0.0f, 0.0f, 0.0f);
+        model *= Matrix4.CreateScale(spritePoint.Scale);
+        model *= Matrix4.CreateRotationZ(spritePoint.Rotation);
+        model *= Matrix4.CreateTranslation(spritePoint.Position.X, spritePoint.Position.Y, 0.0f);
 
         // center object
         //model *= Matrix4.CreateTranslation(0.5f * Size.X, 0.5f * Size.Y, 0.0f);
@@ -88,6 +92,11 @@ class SceneObjectRenderer : ISceneObjectRenderer
         _shader!.Use();
 
         GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+    }
+
+    public void OnRender(ITexturedRectangle texturedRectangle)
+    {
+        throw new System.NotImplementedException();
     }
 
     public void SetProjection(Matrix4 projection)

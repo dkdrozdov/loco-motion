@@ -78,7 +78,10 @@ namespace LocoMotionServer
 
     public class SerializableSceneObject
     {
+
         public Vector2D Position { get; set; } = new Vector2D();
+        public float Scale { get; set; }
+        public float Rotation { get; set; }
         public string TextureId { get; set; } = "";
 
         public SerializableSceneObject()
@@ -89,6 +92,8 @@ namespace LocoMotionServer
         {
             Position = (Vector2D)sceneObject.Position;
             TextureId = sceneObject.TextureId;
+            Scale = sceneObject.Scale;
+            Rotation = sceneObject.Rotation;
         }
     }
 
@@ -143,6 +148,8 @@ namespace LocoMotionServer
                 ISceneObject sceneObject = (ISceneObject)Activator.CreateInstance(objectType)!;
                 sceneObject.Position = pair.Value.Position;
                 sceneObject.TextureId = pair.Value.TextureId;
+                sceneObject.Rotation = pair.Value.Rotation;
+                sceneObject.Scale = pair.Value.Scale;
                 _scene.AddObject(sceneObject);
             }
 
