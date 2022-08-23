@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
+
 namespace LocoMotionServer
 {
     // TODO: finish draft.
@@ -63,9 +64,7 @@ namespace LocoMotionServer
         public List<KeyValuePair<string, SerializableSceneObject>>? SceneObjects { get; set; }
         public void Serialize(string path)
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var jsonString = JsonSerializer.Serialize(this, options);
-
+            string jsonString = JsonConvert.SerializeObject(this);
             System.IO.FileInfo file = new System.IO.FileInfo(path);
             file.Directory?.Create();
             File.WriteAllText(file.FullName, jsonString);
@@ -108,8 +107,7 @@ namespace LocoMotionServer
 
         public void Serialize(string path)
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var jsonString = JsonSerializer.Serialize(this, options);
+            string jsonString = JsonConvert.SerializeObject(this);
 
             System.IO.FileInfo file = new System.IO.FileInfo(path);
             file.Directory?.Create();
@@ -140,7 +138,7 @@ namespace LocoMotionServer
         public void LoadScene(string path)
         {
             string jsonSceneManifest = File.ReadAllText(path + "/" + "manifest.json");
-            SceneManifest? sceneManifest = JsonSerializer.Deserialize<SceneManifest>(jsonSceneManifest);
+            SceneManifest? sceneManifest = JsonConvert.DeserializeObject<SceneManifest>(jsonSceneManifest);
             _scene = new Scene();
             foreach (var pair in sceneManifest?.SceneObjects!)
             {
@@ -158,7 +156,7 @@ namespace LocoMotionServer
             foreach (var manifestName in sceneManifest?.ResourcePacks!)
             {
                 string jsonResourcePackManifest = File.ReadAllText("resources/resourcePacks/" + manifestName + "/manifest.json");
-                ResourcePackManifest resourcePackManifest = JsonSerializer.Deserialize<ResourcePackManifest>(jsonResourcePackManifest)!;
+                ResourcePackManifest resourcePackManifest = JsonConvert.DeserializeObject<ResourcePackManifest>(jsonResourcePackManifest)!;
                 foreach (var item in resourcePackManifest.ResourceItems!)
                 {
                     string fullTexturePath = "resources/resourcePacks/" + manifestName + "/" + item.TexturePath;

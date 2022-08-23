@@ -59,7 +59,7 @@ namespace LocoMotionServer
             o.Id = "id!!!";
             o.Position = new Vector2D(1f, 2f);
             o.Velocity = new Vector2D(3f, 4f);
-            o.Rotation = new Vector2D(5f, 6f);
+            o.Rotation = 5f;
             o.Force = new Vector2D(7f, 8f);
             o.Mass = 9f;
             o.CollisionBoxWidth = 10f;
