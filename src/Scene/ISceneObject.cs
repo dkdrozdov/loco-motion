@@ -21,7 +21,7 @@ namespace LocoMotionServer
         public string Id { get; set; } = "NO_ID";
         [ProtoMember(3)]
         public IVector2D Position { get; set; } = new Vector2D();
-        public string TextureId { get; set; }
+        public string TextureId { get; set; } = "";
 
         public SceneObject() : base() { }
 
@@ -44,10 +44,11 @@ namespace LocoMotionServer
 
     public class Ground : TexturedRectangle
     {
-        public Ground()
+        public Ground(IVector2D bottomLeft, IVector2D topRight) : base(bottomLeft, topRight)
         {
             TextureId = "ground.jpeg";
         }
+
         public int ResourceItemKind => throw new System.NotImplementedException();
     }
 
@@ -55,7 +56,7 @@ namespace LocoMotionServer
     {
         public Cat()
         {
-            TextureId = "resources/sprite.png";
+            TextureId = "resources/resourcePacks/Cat/sprite.png";
         }
 
     }
@@ -64,7 +65,7 @@ namespace LocoMotionServer
     {
         public FlippedCat()
         {
-            TextureId = "resources/sprite2.png";
+            TextureId = "resources/resourcePacks/FlippedCat/sprite2.png";
         }
 
     }

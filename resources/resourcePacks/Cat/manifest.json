@@ -1,0 +1,9 @@
+{
+  "Id": "Cat",
+  "ResourceItems": [
+    {
+      "TexturePath": "sprite.png",
+      "Kind": "Sprite"
+    }
+  ]
+}

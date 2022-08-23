@@ -1,0 +1,9 @@
+{
+  "Id": "FlippedCat",
+  "ResourceItems": [
+    {
+      "TexturePath": "sprite2.png",
+      "Kind": "Sprite"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "Id": "TestScene",
+  "ResourcePacks": [
+    "Cat",
+    "FlippedCat"
+  ],
+  "SceneObjects": [
+    {
+      "Key": "LocoMotionServer.Cat",
+      "Value": {
+        "Position": {
+          "X": 0,
+          "Y": 0
+        },
+        "TextureId": "resources/resourcePacks/Cat/sprite.png"
+      }
+    },
+    {
+      "Key": "LocoMotionServer.FlippedCat",
+      "Value": {
+        "Position": {
+          "X": 0,
+          "Y": 0
+        },
+        "TextureId": "resources/resourcePacks/FlippedCat/sprite2.png"
+      }
+    }
+  ]
+}

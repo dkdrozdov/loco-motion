@@ -112,20 +112,42 @@ namespace LocoMotionServer
             dobjs.ForEach(dobj => Console.WriteLine(dobj.Id));
         }
 
+        static void InitResources()
+        {
+            // Define scene objects
+            Cat cat = new Cat();
+            FlippedCat flippedCat = new FlippedCat();
+
+            // Init and serialize TestScene
+            SceneManifest testScene = new SceneManifest();
+            testScene.Id = "TestScene";
+            testScene.ResourcePacks = new List<string>();
+            testScene.ResourcePacks.Add("Cat");
+            testScene.ResourcePacks.Add("FlippedCat");
+            testScene.SceneObjects = new List<KeyValuePair<string, SerializableSceneObject>>();
+            testScene.SceneObjects.Add(new KeyValuePair<string, SerializableSceneObject>(cat.GetType().FullName!, new SerializableSceneObject(cat)));
+            testScene.SceneObjects.Add(new KeyValuePair<string, SerializableSceneObject>(flippedCat.GetType().FullName!, new SerializableSceneObject(flippedCat)));
+            testScene.Serialize();
+
+            // Init and serialize resource packs
+            ResourcePackManifest catResourcePack = new ResourcePackManifest();
+            catResourcePack.Id = "Cat";
+            catResourcePack.ResourceItems = new List<ResourceItem>();
+            catResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "sprite.png"));
+            catResourcePack.Serialize();
+
+            ResourcePackManifest flippedCatResourcePack = new ResourcePackManifest();
+            flippedCatResourcePack.Id = "FlippedCat";
+            flippedCatResourcePack.ResourceItems = new List<ResourceItem>();
+            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "sprite2.png"));
+            flippedCatResourcePack.Serialize();
+        }
 
         static void TestResources()
         {
-            ResourcePack resourcePack = new ResourcePack(
-                new ResourceItem(ResourceItemKind.Sprite, "resources/sprite.png"),
-                new ResourceItem(ResourceItemKind.Sprite, "resources/sprite2.png"));
-
-            Scene scene = new Scene();
-            scene.AddObject(new Cat());
-            scene.AddObject(new FlippedCat());
-
             IRenderer renderer = new GLRenderer();
-            ResourceManager resourceManager = new ResourceManager(resourcePack);
-            resourceManager.LoadScene(new SceneManifest(), resourcePack, scene);
+            ResourceManager resourceManager = new ResourceManager();
+            resourceManager.LoadScene("resources/scenes/TestScene");
             resourceManager.InitRenderer(renderer);
 
             WindowManager.StartWindow(renderer);
@@ -135,6 +157,7 @@ namespace LocoMotionServer
         {
             // MainLoop();
             // TestSerialization();
+            InitResources();
             TestResources();
         }
     }

@@ -14,8 +14,14 @@ namespace LocoMotionServer
 
     public class TexturedRectangle : SceneObject, ITexturedRectangle
     {
-        public IVector2D? BottomLeft { get; set; }
-        public IVector2D? TopRight { get; set; }
+        public TexturedRectangle(IVector2D bottomLeft, IVector2D topRight)
+        {
+            BottomLeft = bottomLeft;
+            TopRight = topRight;
+        }
+
+        public IVector2D BottomLeft { get; set; }
+        public IVector2D TopRight { get; set; }
         public override void Render(IRenderer renderer)
         {
             renderer.Render(this);
