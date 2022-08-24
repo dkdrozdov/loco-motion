@@ -12,7 +12,7 @@ namespace LocoMotionServer
     [ProtoContract]
     [ProtoInclude(1, typeof(Platform))]
     [ProtoInclude(2, typeof(PhysicalObject))]
-    public class CollidableObject : SceneObject, ICollidableObject
+    public abstract class CollidableObject : SceneObject, ICollidableObject
     {
         [ProtoMember(3)]
         public float CollisionBoxWidth { get; set; }

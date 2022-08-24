@@ -2,46 +2,82 @@ using System.Collections.Generic;
 
 namespace LocoMotionServer
 {
-    public interface IRenderableSceneObject
+    public interface IRenderable
     {
+        string TextureId { get; }
+        public ISceneObject sceneObject { get; set; }
+        public void Render(IRenderer renderer);
         // Texture or Animatable
     }
+    public abstract class RenderableSceneObject : IRenderable
+    {
+        [Newtonsoft.Json.JsonIgnore]
+        public ISceneObject sceneObject { get; set; }
+        public string TextureId { get => sceneObject.TextureId; }
 
-    public interface ITexturedRectangle : ISceneObject
+        public RenderableSceneObject(ISceneObject sceneObject)
+        {
+            this.sceneObject = sceneObject;
+        }
+
+        public abstract void Render(IRenderer renderer);
+    }
+    public interface ITexturedRectangle : IRenderable
     {
         IVector2D BottomLeft { get; set; }
         IVector2D TopRight { get; set; }
     }
 
-    public class TexturedRectangle : SceneObject, ITexturedRectangle
+    public class TexturedRectangle : RenderableSceneObject, ITexturedRectangle
     {
-        public TexturedRectangle(IVector2D bottomLeft, IVector2D topRight)
+        public TexturedRectangle(ISceneObject sceneObject) : base(sceneObject)
+        {
+            BottomLeft = new Vector2D();
+            TopRight = new Vector2D();
+        }
+        public TexturedRectangle(ISceneObject sceneObject, IVector2D bottomLeft, IVector2D topRight) : base(sceneObject)
         {
             BottomLeft = bottomLeft;
             TopRight = topRight;
         }
 
+        public TexturedRectangle(ISceneObject sceneObject, float width, float height) : base(sceneObject)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IVector2D BottomLeft { get; set; }
         public IVector2D TopRight { get; set; }
+
         public override void Render(IRenderer renderer)
         {
             renderer.Render(this);
         }
     }
 
-    public interface ISpritePoint : ISceneObject
+    public interface ISpritePoint : IRenderable
     {
-        IVector2D SpritePosition { get; }
+        float Scale { get; }
+        IVector2D Position { get; }
+        float Rotation { get; }
         bool FlipHorizontally { get; set; }
         bool FlipVertically { get; set; }
     }
 
-    public class SpritePoint : SceneObject, ISpritePoint
+    public class SpritePoint : RenderableSceneObject, ISpritePoint
     {
-        public IVector2D SpritePosition => Position;
         public bool FlipHorizontally { get; set; }
         public bool FlipVertically { get; set; }
-        public int ResourceItemKind;
+        public float Scale { get => sceneObject.Scale; }
+        public IVector2D Position { get => sceneObject.Position; }
+        public float Rotation { get => sceneObject.Rotation; }
+
+        public SpritePoint(ISceneObject sceneObject) : base(sceneObject)
+        {
+            FlipHorizontally = false;
+            FlipVertically = false;
+        }
+
         public override void Render(IRenderer renderer)
         {
             renderer.Render(this);

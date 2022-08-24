@@ -13,7 +13,7 @@ namespace LocoMotionServer
         void OnMove(IMoveEvent e);
     }
 
-    public class PhysicalObject : CollidableObject, IPhysicalObject
+    public abstract class PhysicalObject : CollidableObject, IPhysicalObject
     {
         [ProtoMember(2)]
         public IVector2D Velocity { get; set; } = new Vector2D();

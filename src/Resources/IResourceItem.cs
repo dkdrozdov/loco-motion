@@ -1,5 +1,4 @@
 using System.IO;
-using Newtonsoft.Json;
 
 public enum ResourceItemKind
 {
@@ -22,7 +21,8 @@ public class ResourceItem : IResourceItem
         Kind = kind;
         TexturePath = texturePath;
     }
-    [JsonIgnoreAttribute]
+    [Newtonsoft.Json.JsonIgnore]
+
     public byte[]? ResourceData { get; set; }
     public string TexturePath { get; set; }
     public string Kind { get; set; }

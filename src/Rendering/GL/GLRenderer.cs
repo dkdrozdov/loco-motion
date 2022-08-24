@@ -28,16 +28,6 @@ public class GLRenderer : IRenderer
         }
     }
 
-    // public void OnLoad()
-    // {
-    //     foreach (var renderable in renderables)
-    //     {
-    //         renderable.OnLoad();
-    //         renderable.SetProjection(_projection);
-    //         renderable.SetView(_view);
-    //     }
-    // }
-
     public void OnLoad()
     {
         foreach (var item in _objectRenderers.Values)
@@ -53,7 +43,7 @@ public class GLRenderer : IRenderer
     {
         foreach (SceneObject sceneObject in _scene?.SceneObjects!)
         {
-            sceneObject.Render(this);
+            sceneObject.Renderable.Render(this);
         }
     }
 

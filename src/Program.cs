@@ -23,7 +23,7 @@ namespace LocoMotionServer
             var size = new Vector2D(20, 10);
             var p1 = new Platform(3, 1);
             p1.Position = new Vector2D(3, 3);
-            var o1 = new PhysicalObject();
+            var o1 = new AgentObject();
             o1.Position = new Vector2D(3, 6);
             Scene.Size = size;
             Scene.AddObject(p1);
@@ -54,7 +54,7 @@ namespace LocoMotionServer
         static void TestSerialization()
         {
             //  Initializing
-            var o = new PhysicalObject();
+            var o = new AgentObject();
             o.Id = "id!!!";
             o.Position = new Vector2D(1f, 2f);
             o.Velocity = new Vector2D(3f, 4f);
@@ -92,9 +92,9 @@ namespace LocoMotionServer
         static void TestSerializationMini()
         {
             IList<ISceneObject> objs = new List<ISceneObject>();
-            var o1 = new SceneObject();
+            var o1 = new Cat();
             o1.Id = "hello, world 1";
-            var o2 = new SceneObject();
+            var o2 = new FlippedCat();
             o2.Id = "hello, world 2";
             objs.Add(o1);
             objs.Add(o2);
