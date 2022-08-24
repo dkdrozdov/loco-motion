@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ProtoBuf;
 
 namespace LocoMotionServer
@@ -19,6 +20,7 @@ namespace LocoMotionServer
     public class SceneObject : ManagableObject, ISceneObject
     {
         [ProtoMember(2)]
+        [JsonIgnoreAttribute]
         public string Id { get; set; } = "NO_ID";
         [ProtoMember(3)]
         public IVector2D Position { get; set; } = new Vector2D();

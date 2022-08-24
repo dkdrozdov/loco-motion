@@ -10,7 +10,6 @@
 using TestType = LocoMotionServer.Scene;
 using System;
 using System.IO;
-using ProtoBuf;
 using System.Collections.Generic;
 
 namespace LocoMotionServer
@@ -79,14 +78,14 @@ namespace LocoMotionServer
             //  Serializing to .bin
             using (var file = File.Create("obj.bin"))
             {
-                Serializer.Serialize(file, obj);
+                ProtoBuf.Serializer.Serialize(file, obj);
             }
 
             //  Deserializing
             TestType nobj;
             using (var file = File.OpenRead("obj.bin"))
             {
-                nobj = Serializer.Deserialize<TestType>(file);
+                nobj = ProtoBuf.Serializer.Deserialize<TestType>(file);
             }
         }
 
@@ -101,13 +100,13 @@ namespace LocoMotionServer
             objs.Add(o2);
             using (var file = File.Create("obj.bin"))
             {
-                Serializer.Serialize(file, objs);
+                ProtoBuf.Serializer.Serialize(file, objs);
             }
 
             List<ISceneObject> dobjs;
             using (var file = File.OpenRead("obj.bin"))
             {
-                dobjs = Serializer.Deserialize<List<ISceneObject>>(file);
+                dobjs = ProtoBuf.Serializer.Deserialize<List<ISceneObject>>(file);
             }
             dobjs.ForEach(dobj => Console.WriteLine(dobj.Id));
         }
@@ -128,9 +127,9 @@ namespace LocoMotionServer
             testScene.ResourcePacks = new List<string>();
             testScene.ResourcePacks.Add("Cat");
             testScene.ResourcePacks.Add("FlippedCat");
-            testScene.SceneObjects = new List<KeyValuePair<string, SerializableSceneObject>>();
-            testScene.SceneObjects.Add(new KeyValuePair<string, SerializableSceneObject>(cat.GetType().FullName!, new SerializableSceneObject(cat)));
-            testScene.SceneObjects.Add(new KeyValuePair<string, SerializableSceneObject>(flippedCat.GetType().FullName!, new SerializableSceneObject(flippedCat)));
+            testScene.SceneObjects = new List<SceneObject>();
+            testScene.SceneObjects.Add(cat);
+            testScene.SceneObjects.Add(flippedCat);
             testScene.Serialize();
 
             // Init and serialize resource packs

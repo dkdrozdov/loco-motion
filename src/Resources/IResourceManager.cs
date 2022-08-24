@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -51,6 +50,21 @@ namespace LocoMotionServer
         }
     }
 
+    public static class Serializer
+    {
+        public static void Serialize(string path, object o)
+        {
+            string jsonString = JsonConvert.SerializeObject(o, Formatting.Indented, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+
+            System.IO.FileInfo file = new System.IO.FileInfo(path);
+            file.Directory?.Create();
+            File.WriteAllText(file.FullName, jsonString);
+        }
+    }
+
     public class SceneManifest
     {
         public SceneManifest()
@@ -61,38 +75,10 @@ namespace LocoMotionServer
         public List<string>? ResourcePacks { get; set; }
 
         // SceneObject type to SceneObject
-        public List<KeyValuePair<string, SerializableSceneObject>>? SceneObjects { get; set; }
-        public void Serialize(string path)
-        {
-            string jsonString = JsonConvert.SerializeObject(this);
-            System.IO.FileInfo file = new System.IO.FileInfo(path);
-            file.Directory?.Create();
-            File.WriteAllText(file.FullName, jsonString);
-        }
+        public List<SceneObject>? SceneObjects { get; set; }
         public void Serialize()
         {
-            Serialize("resources/scenes/" + Id + "/manifest.json");
-        }
-    }
-
-    public class SerializableSceneObject
-    {
-
-        public Vector2D Position { get; set; } = new Vector2D();
-        public float Scale { get; set; }
-        public float Rotation { get; set; }
-        public string TextureId { get; set; } = "";
-
-        public SerializableSceneObject()
-        {
-
-        }
-        public SerializableSceneObject(SceneObject sceneObject)
-        {
-            Position = (Vector2D)sceneObject.Position;
-            TextureId = sceneObject.TextureId;
-            Scale = sceneObject.Scale;
-            Rotation = sceneObject.Rotation;
+            Serializer.Serialize("resources/scenes/" + Id + "/manifest.json", this);
         }
     }
 
@@ -105,18 +91,9 @@ namespace LocoMotionServer
         public string? Id { get; set; }
         public List<ResourceItem>? ResourceItems { get; set; }
 
-        public void Serialize(string path)
-        {
-            string jsonString = JsonConvert.SerializeObject(this);
-
-            System.IO.FileInfo file = new System.IO.FileInfo(path);
-            file.Directory?.Create();
-            File.WriteAllText(file.FullName, jsonString);
-        }
-
         public void Serialize()
         {
-            Serialize("resources/resourcePacks/" + Id + "/manifest.json");
+            Serializer.Serialize("resources/resourcePacks/" + Id + "/manifest.json", this);
         }
     }
 
@@ -138,16 +115,16 @@ namespace LocoMotionServer
         public void LoadScene(string path)
         {
             string jsonSceneManifest = File.ReadAllText(path + "/" + "manifest.json");
-            SceneManifest? sceneManifest = JsonConvert.DeserializeObject<SceneManifest>(jsonSceneManifest);
+            SceneManifest? sceneManifest = JsonConvert.DeserializeObject<SceneManifest>(
+                jsonSceneManifest,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                });
+
             _scene = new Scene();
-            foreach (var pair in sceneManifest?.SceneObjects!)
+            foreach (var sceneObject in sceneManifest?.SceneObjects!)
             {
-                Type objectType = Type.GetType(pair.Key)!;
-                ISceneObject sceneObject = (ISceneObject)Activator.CreateInstance(objectType)!;
-                sceneObject.Position = pair.Value.Position;
-                sceneObject.TextureId = pair.Value.TextureId;
-                sceneObject.Rotation = pair.Value.Rotation;
-                sceneObject.Scale = pair.Value.Scale;
                 _scene.AddObject(sceneObject);
             }
 

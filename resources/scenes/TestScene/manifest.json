@@ -1,26 +1,49 @@
 {
+  "$type": "LocoMotionServer.SceneManifest, loco-motion",
   "Id": "TestScene",
-  "ResourcePacks": [
-    "Cat",
-    "FlippedCat"
-  ],
-  "SceneObjects": [
-    {
-      "Key": "LocoMotionServer.Cat",
-      "Value": {
+  "ResourcePacks": {
+    "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
+    "$values": [
+      "Cat",
+      "FlippedCat"
+    ]
+  },
+  "SceneObjects": {
+    "$type": "System.Collections.Generic.List`1[[LocoMotionServer.SceneObject, loco-motion]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "LocoMotionServer.Cat, loco-motion",
+        "ResourceItemKind": 0,
+        "SpritePosition": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.5,
+          "Y": 0.5
+        },
+        "FlipHorizontally": false,
+        "FlipVertically": false,
+        "Id": "NO_ID",
         "Position": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
           "X": 0.5,
           "Y": 0.5
         },
         "Scale": 0.5,
         "Rotation": 1.0,
         "TextureId": "resources/resourcePacks/Cat/sprite.png"
-      }
-    },
-    {
-      "Key": "LocoMotionServer.FlippedCat",
-      "Value": {
+      },
+      {
+        "$type": "LocoMotionServer.FlippedCat, loco-motion",
+        "ResourceItemKind": 0,
+        "SpritePosition": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "FlipHorizontally": false,
+        "FlipVertically": false,
+        "Id": "NO_ID",
         "Position": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
           "X": 0.0,
           "Y": 0.0
         },
@@ -28,6 +51,6 @@
         "Rotation": 0.0,
         "TextureId": "resources/resourcePacks/FlippedCat/sprite2.png"
       }
-    }
-  ]
+    ]
+  }
 }
