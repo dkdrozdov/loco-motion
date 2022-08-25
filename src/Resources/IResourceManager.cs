@@ -72,6 +72,7 @@ namespace LocoMotionServer
         }
 
         public string? Id { get; set; }
+        public IVector2D Size { get; set; } = new Vector2D();
         public List<string>? ResourcePacks { get; set; }
 
         // SceneObject type to SceneObject
@@ -122,7 +123,7 @@ namespace LocoMotionServer
                     TypeNameHandling = TypeNameHandling.Auto
                 });
 
-            _scene = new Scene();
+            _scene = new Scene(sceneManifest!.Size);
             foreach (var sceneObject in sceneManifest?.SceneObjects!)
             {
                 _scene.AddObject(sceneObject);

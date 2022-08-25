@@ -2,6 +2,7 @@ using LocoMotionServer;
 
 public interface IRenderer
 {
+    public void UpdateRatio(float width, float height);
     public void InitResources(IResourcePack resourcePack, IScene scene);
     public void OnLoad();
     public void OnRender();

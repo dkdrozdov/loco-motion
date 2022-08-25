@@ -124,7 +124,7 @@ namespace LocoMotionServer
             agent.Position = new Vector2D(0.5f, 0.0f);
             agent.Scale = 0.25f;
 
-            Platform platform1 = new Platform(2.0f, 0.05f);
+            Platform platform1 = new Platform(2.0f, 0.25f);
             platform1.Position = new Vector2D(0.5f, -0.25f);
 
             Platform platform2 = new Platform(0.5f, 0.2f);
@@ -132,6 +132,8 @@ namespace LocoMotionServer
             // Init and serialize TestScene
             SceneManifest testScene = new SceneManifest();
             testScene.Id = "TestScene";
+            testScene.Size.X = 1.5f;
+            testScene.Size.Y = 1.5f;
             testScene.ResourcePacks = new List<string>();
             testScene.ResourcePacks.Add("Cat");
             testScene.ResourcePacks.Add("FlippedCat");

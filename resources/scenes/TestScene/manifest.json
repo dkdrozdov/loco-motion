@@ -1,6 +1,11 @@
 {
   "$type": "LocoMotionServer.SceneManifest, loco-motion",
   "Id": "TestScene",
+  "Size": {
+    "$type": "LocoMotionServer.Vector2D, loco-motion",
+    "X": 1.5,
+    "Y": 1.5
+  },
   "ResourcePacks": {
     "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
     "$values": [
@@ -59,9 +64,9 @@
         "$type": "LocoMotionServer.Platform, loco-motion",
         "TextureId": "resources/resourcePacks/Common/platform.png",
         "CollisionBoxWidth": 2.0,
-        "CollisionBoxHeight": 0.05,
+        "CollisionBoxHeight": 0.25,
         "BoxWidth": 2.0,
-        "BoxHeight": 0.05,
+        "BoxHeight": 0.25,
         "Position": {
           "$type": "LocoMotionServer.Vector2D, loco-motion",
           "X": 0.5,

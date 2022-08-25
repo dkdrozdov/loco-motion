@@ -7,6 +7,8 @@ public interface ITexture
     public void OnLoad();
     public void LoadFromFile(string path);
     public void Use(TextureUnit unit);
+    public float Height { get; set; }
+    public float Width { get; set; }
 }
 
 public class Texture : ITexture

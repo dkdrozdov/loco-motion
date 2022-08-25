@@ -9,6 +9,7 @@ interface ISceneObjectRenderer
     public void OnRender(ISpritePoint spritePoint);
     public void SetProjection(Matrix4 projection);
     public void SetView(Matrix4 view);
+    public IVector2D Dimensions { get; }
 }
 
 class SceneObjectRenderer : ISceneObjectRenderer
@@ -31,20 +32,27 @@ class SceneObjectRenderer : ISceneObjectRenderer
     private int _elementBufferObject;
     private int _vertexBufferObject;
     private int _vertexArrayObject;
-
+    private IVector2D _dimensions;
+    public IVector2D Dimensions { get => _dimensions!; }
+    private bool _scaleSpriteByX = true;
     public SceneObjectRenderer(byte[] textureData)
     {
+        _dimensions = new Vector2D();
         _texture = new Texture(textureData);
     }
 
     public SceneObjectRenderer(ITexture texture)
     {
+        _dimensions = new Vector2D();
         _texture = texture;
     }
+
 
     public void OnLoad()
     {
         _texture?.OnLoad();
+        _dimensions.X = _texture!.Width;
+        _dimensions.Y = _texture.Height;
 
         _vertexArrayObject = GL.GenVertexArray();
         GL.BindVertexArray(_vertexArrayObject);
@@ -76,16 +84,15 @@ class SceneObjectRenderer : ISceneObjectRenderer
         GL.BindVertexArray(_vertexArrayObject);
 
         Matrix4 model = Matrix4.Identity;
+
+        if (_scaleSpriteByX)
+            model *= Matrix4.CreateScale(1.0f, Dimensions.Y / Dimensions.X, 1.0f);
+        else
+            model *= Matrix4.CreateScale(Dimensions.X / Dimensions.Y, 1.0f, 1.0f);
+
         model *= Matrix4.CreateScale(spritePoint.Scale);
         model *= Matrix4.CreateRotationZ(spritePoint.Rotation);
         model *= Matrix4.CreateTranslation(spritePoint.Position.X, spritePoint.Position.Y, 0.0f);
-
-        // center object
-        //model *= Matrix4.CreateTranslation(0.5f * Size.X, 0.5f * Size.Y, 0.0f);
-        //model *= Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation));
-        //model = Matrix4.CreateTranslation(-0.5f * Size.X, -0.5f * Size.Y, 0.0f);
-        //model *= Matrix4.CreateScale(Size.X, Size.Y, 1.0f);
-        //model *= Matrix4.CreateTranslation(Position.X, Position.Y, 0.0f);
 
         _shader!.SetMatrix4("model", model);
         _texture!.Use(TextureUnit.Texture0);
