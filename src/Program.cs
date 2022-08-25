@@ -119,17 +119,28 @@ namespace LocoMotionServer
             cat.Position.Y = 0.5f;
             cat.Rotation = 1.0f;
             cat.Scale = 0.5f;
-            FlippedCat flippedCat = new FlippedCat();
 
+            AgentObject agent = new AgentObject();
+            agent.Position = new Vector2D(0.5f, 0.0f);
+            agent.Scale = 0.25f;
+
+            Platform platform1 = new Platform(2.0f, 0.05f);
+            platform1.Position = new Vector2D(0.5f, -0.25f);
+
+            Platform platform2 = new Platform(0.5f, 0.2f);
+            platform2.Position = new Vector2D(-0.75f, 0.5f);
             // Init and serialize TestScene
             SceneManifest testScene = new SceneManifest();
             testScene.Id = "TestScene";
             testScene.ResourcePacks = new List<string>();
             testScene.ResourcePacks.Add("Cat");
             testScene.ResourcePacks.Add("FlippedCat");
+            testScene.ResourcePacks.Add("Common");
             testScene.SceneObjects = new List<SceneObject>();
             testScene.SceneObjects.Add(cat);
-            testScene.SceneObjects.Add(flippedCat);
+            testScene.SceneObjects.Add(agent);
+            testScene.SceneObjects.Add(platform1);
+            testScene.SceneObjects.Add(platform2);
             testScene.Serialize();
 
             // Init and serialize resource packs
@@ -143,6 +154,13 @@ namespace LocoMotionServer
             flippedCatResourcePack.Id = "FlippedCat";
             flippedCatResourcePack.ResourceItems = new List<ResourceItem>();
             flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "sprite2.png"));
+            flippedCatResourcePack.Serialize();
+
+            ResourcePackManifest common = new ResourcePackManifest();
+            flippedCatResourcePack.Id = "Common";
+            flippedCatResourcePack.ResourceItems = new List<ResourceItem>();
+            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "platform.png"));
+            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "agent.png"));
             flippedCatResourcePack.Serialize();
         }
 

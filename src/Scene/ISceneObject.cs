@@ -10,7 +10,7 @@ namespace LocoMotionServer
         IVector2D Position { get; set; }
         public float Scale { get; set; }
         public float Rotation { get; set; }
-        string TextureId { get; set; }
+        string TextureId { get; }
     }
 
     [ProtoContract]
@@ -24,7 +24,7 @@ namespace LocoMotionServer
         public IVector2D Position { get; set; } = new Vector2D();
         public float Scale { get; set; } = 1.0f;
         public float Rotation { get; set; } = 0f;
-        public string TextureId { get; set; } = "";
+        public abstract string TextureId { get; }
         [Newtonsoft.Json.JsonIgnore]
         public abstract IRenderable Renderable { get; set; }
         public SceneObject() : base() { }
@@ -42,42 +42,41 @@ namespace LocoMotionServer
         enum Animations { };
     }
 
-    public class Ground : SceneObject
+    public class Ground : BoxObject
     {
-        public Ground(IVector2D bottomLeft, IVector2D topRight) : base()
+        public Ground(float width, float height) : base(width, height)
         {
-            TextureId = "ground.jpeg";
-            Renderable = new TexturedRectangle(this, bottomLeft, topRight);
+            Renderable = new TexturedRectangle(this);
         }
         [Newtonsoft.Json.JsonIgnore]
 
         public override IRenderable Renderable { get; set; }
-
+        public override string TextureId { get => "ground.jpeg"; }
+        public override float BoxWidth { get; set; }
+        public override float BoxHeight { get; set; }
     }
 
     public class Cat : SceneObject
     {
         public Cat()
         {
-            TextureId = "resources/resourcePacks/Cat/sprite.png";
             Renderable = new SpritePoint(this);
         }
 
         [Newtonsoft.Json.JsonIgnore]
         public override IRenderable Renderable { get; set; }
-
+        public override string TextureId { get => "resources/resourcePacks/Cat/sprite.png"; }
     }
 
     public class FlippedCat : SceneObject
     {
         public FlippedCat()
         {
-            TextureId = "resources/resourcePacks/FlippedCat/sprite2.png";
             Renderable = new SpritePoint(this);
         }
         [Newtonsoft.Json.JsonIgnore]
 
         public override IRenderable Renderable { get; set; }
-
+        public override string TextureId { get => "resources/resourcePacks/FlippedCat/sprite2.png"; }
     }
 }
