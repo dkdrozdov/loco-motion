@@ -15,7 +15,7 @@ namespace LocoMotionServer
     public interface IResourceManager
     {
         // TODO: should load resource pack scene refers to.
-        void LoadScene(string path);
+        IScene LoadScene(string path);
         void InitRenderer(IRenderer renderer);
     }
 
@@ -113,7 +113,7 @@ namespace LocoMotionServer
             renderer.InitResources(_resourcePack!, _scene!);
         }
 
-        public void LoadScene(string path)
+        public IScene LoadScene(string path)
         {
             string jsonSceneManifest = File.ReadAllText(path + "/" + "manifest.json");
             SceneManifest? sceneManifest = JsonConvert.DeserializeObject<SceneManifest>(
@@ -148,6 +148,7 @@ namespace LocoMotionServer
             {
                 resourceItem.InitItem();
             }
+            return _scene;
         }
     }
 }

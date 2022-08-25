@@ -4,7 +4,7 @@ using OpenTK.Windowing.Desktop;
 
 public static class WindowManager
 {
-    public static void StartWindow(IRenderer renderer)
+    public static LocoMotionGameWindow CreateWindow(IRenderer renderer, int updateTimeMs, double renderFrequency)
     {
         var nativeWindowSettings = new NativeWindowSettings()
         {
@@ -12,15 +12,16 @@ public static class WindowManager
             Title = "loco-motion",
             Flags = ContextFlags.ForwardCompatible,
         };
-
-        // SceneRenderer renderer = new SceneRenderer();
-        using (var window = new LocoMotionGameWindow(renderer, GameWindowSettings.Default, nativeWindowSettings))
+        var gameWindowSettings = new GameWindowSettings()
         {
-            // ResourceItemRenderer o = new ResourceItemRenderer();
-            // o.LoadTexture("resources/sprite.png");
-            // renderer.AddObject(o);
-
-            window.Run();
-        }
+            UpdateFrequency = 1f / ((double)updateTimeMs / 1000f),
+            RenderFrequency = renderFrequency
+        };
+        var window = new LocoMotionGameWindow(renderer, gameWindowSettings, nativeWindowSettings, updateTimeMs);
+        return window;
+    }
+    public static void StartWindow(LocoMotionGameWindow window)
+    {
+        window.Run();
     }
 }

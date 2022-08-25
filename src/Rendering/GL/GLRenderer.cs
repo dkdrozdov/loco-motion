@@ -38,7 +38,7 @@ public class GLRenderer : IRenderer
         _resourcePack = resourcePack;
         _scene = scene;
         SetProjection(_sceneDimensions, 1f, 1f);
-        _view = Matrix4.CreateScale(0.5f);
+        _view = Matrix4.CreateScale(1f);
         var items = resourcePack.ResourceItems;
         foreach (var item in items)
         {

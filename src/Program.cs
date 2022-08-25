@@ -35,19 +35,24 @@ namespace LocoMotionServer
         static void MainLoop()
         {
             Console.WriteLine("Starting server application");
-            int CLOCK_FREQUENCY_MS = 100;
-            int SERVER_TICK_INTERVAL_MS = 500;
+            int CLOCK_FREQUENCY_MS = 20;
+            int SERVER_TICK_INTERVAL_MS = 40;
 
+            double renderFrequency = 60;
+
+            var renderer = new GLRenderer();
+            var resourceManager = new ResourceManager();
             var lm = new LifecycleManager();
-            //  TODO: load from file
-            var loadedScene = new MyScene();
-            var scene = loadedScene.Scene;
+            var scene = resourceManager.LoadScene("resources/scenes/TestScene");
             var physics = new Physics(scene);
             var config = new ServerConfig(SERVER_TICK_INTERVAL_MS);
-            var clock = new Clock(CLOCK_FREQUENCY_MS);
-            var server = new Server(lm, scene, physics, config, clock);
-            clock.Run();
+            var window = WindowManager.CreateWindow(renderer, CLOCK_FREQUENCY_MS, renderFrequency);
+            // var clock = new Clock(CLOCK_FREQUENCY_MS);
+            var server = new Server(lm, scene, physics, config, window);
+            resourceManager.InitRenderer(renderer);
+            // clock.Run();
             server.Start();
+            WindowManager.StartWindow(window);
             Console.WriteLine("Server application is running, press any key to shutdown");
             Console.Read();
         }
@@ -113,57 +118,43 @@ namespace LocoMotionServer
 
         static void InitResources()
         {
-            // Define scene objects
-            Cat cat = new Cat();
-            cat.Position.X = 0.5f;
-            cat.Position.Y = 0.5f;
-            cat.Rotation = 1.0f;
-            cat.Scale = 0.5f;
+            AgentObject agent1 = new AgentObject();
+            agent1.Position = new Vector2D(0.3f, 0.4f);
 
-            AgentObject agent = new AgentObject();
-            agent.Position = new Vector2D(0.5f, 0.0f);
-            agent.Scale = 0.25f;
+            AgentObject agent2 = new AgentObject();
+            agent2.Position = new Vector2D(-0.3f, 0.0f);
 
-            Platform platform1 = new Platform(2.0f, 0.25f);
-            platform1.Position = new Vector2D(0.5f, -0.25f);
+            AgentObject agent3 = new AgentObject();
+            agent3.Position = new Vector2D(0.2f, -0.2f);
 
-            Platform platform2 = new Platform(0.5f, 0.2f);
-            platform2.Position = new Vector2D(-0.75f, 0.5f);
+            Platform platform1 = new Platform(0.6f, 0.1f);
+            platform1.Position = new Vector2D(0.3f, 0.2f);
+
+            Platform platform2 = new Platform(0.4f, 0.1f);
+            platform2.Position = new Vector2D(-0.3f, -0.3f);
+
             // Init and serialize TestScene
             SceneManifest testScene = new SceneManifest();
             testScene.Id = "TestScene";
             testScene.Size.X = 1.5f;
             testScene.Size.Y = 1.5f;
             testScene.ResourcePacks = new List<string>();
-            testScene.ResourcePacks.Add("Cat");
-            testScene.ResourcePacks.Add("FlippedCat");
             testScene.ResourcePacks.Add("Common");
             testScene.SceneObjects = new List<SceneObject>();
-            testScene.SceneObjects.Add(cat);
-            testScene.SceneObjects.Add(agent);
+            testScene.SceneObjects.Add(agent1);
+            testScene.SceneObjects.Add(agent2);
+            testScene.SceneObjects.Add(agent3);
             testScene.SceneObjects.Add(platform1);
             testScene.SceneObjects.Add(platform2);
             testScene.Serialize();
 
             // Init and serialize resource packs
-            ResourcePackManifest catResourcePack = new ResourcePackManifest();
-            catResourcePack.Id = "Cat";
-            catResourcePack.ResourceItems = new List<ResourceItem>();
-            catResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "sprite.png"));
-            catResourcePack.Serialize();
-
-            ResourcePackManifest flippedCatResourcePack = new ResourcePackManifest();
-            flippedCatResourcePack.Id = "FlippedCat";
-            flippedCatResourcePack.ResourceItems = new List<ResourceItem>();
-            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "sprite2.png"));
-            flippedCatResourcePack.Serialize();
-
             ResourcePackManifest common = new ResourcePackManifest();
-            flippedCatResourcePack.Id = "Common";
-            flippedCatResourcePack.ResourceItems = new List<ResourceItem>();
-            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "platform.png"));
-            flippedCatResourcePack.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "agent.png"));
-            flippedCatResourcePack.Serialize();
+            common.Id = "Common";
+            common.ResourceItems = new List<ResourceItem>();
+            common.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "platform.png"));
+            common.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "agent.png"));
+            common.Serialize();
         }
 
         static void TestResources()
@@ -173,15 +164,15 @@ namespace LocoMotionServer
             resourceManager.LoadScene("resources/scenes/TestScene");
             resourceManager.InitRenderer(renderer);
 
-            WindowManager.StartWindow(renderer);
+            // WindowManager.StartWindow(renderer);
         }
 
         static void Main(string[] args)
         {
-            // MainLoop();
             // TestSerialization();
+            // TestResources();
             InitResources();
-            TestResources();
+            MainLoop();
         }
     }
 }

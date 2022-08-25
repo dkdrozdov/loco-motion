@@ -9,8 +9,6 @@
   "ResourcePacks": {
     "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
     "$values": [
-      "Cat",
-      "FlippedCat",
       "Common"
     ]
   },
@@ -18,15 +16,36 @@
     "$type": "System.Collections.Generic.List`1[[LocoMotionServer.SceneObject, loco-motion]], System.Private.CoreLib",
     "$values": [
       {
-        "$type": "LocoMotionServer.Cat, loco-motion",
-        "TextureId": "resources/resourcePacks/Cat/sprite.png",
+        "$type": "LocoMotionServer.AgentObject, loco-motion",
+        "TextureId": "resources/resourcePacks/Common/agent.png",
+        "Velocity": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Force": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Mass": 1.0,
+        "isGrounded": false,
+        "Momentum": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "CollisionBoxWidth": 0.0,
+        "CollisionBoxHeight": 0.0,
+        "BoxWidth": 0.0,
+        "BoxHeight": 0.0,
         "Position": {
           "$type": "LocoMotionServer.Vector2D, loco-motion",
-          "X": 0.5,
-          "Y": 0.5
+          "X": 0.3,
+          "Y": 0.4
         },
-        "Scale": 0.5,
-        "Rotation": 1.0
+        "Scale": 0.125,
+        "Rotation": 0.0
       },
       {
         "$type": "LocoMotionServer.AgentObject, loco-motion",
@@ -54,23 +73,55 @@
         "BoxHeight": 0.0,
         "Position": {
           "$type": "LocoMotionServer.Vector2D, loco-motion",
-          "X": 0.5,
+          "X": -0.3,
           "Y": 0.0
         },
-        "Scale": 0.25,
+        "Scale": 0.125,
+        "Rotation": 0.0
+      },
+      {
+        "$type": "LocoMotionServer.AgentObject, loco-motion",
+        "TextureId": "resources/resourcePacks/Common/agent.png",
+        "Velocity": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Force": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Mass": 1.0,
+        "isGrounded": false,
+        "Momentum": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "CollisionBoxWidth": 0.0,
+        "CollisionBoxHeight": 0.0,
+        "BoxWidth": 0.0,
+        "BoxHeight": 0.0,
+        "Position": {
+          "$type": "LocoMotionServer.Vector2D, loco-motion",
+          "X": 0.2,
+          "Y": -0.2
+        },
+        "Scale": 0.125,
         "Rotation": 0.0
       },
       {
         "$type": "LocoMotionServer.Platform, loco-motion",
         "TextureId": "resources/resourcePacks/Common/platform.png",
-        "CollisionBoxWidth": 2.0,
-        "CollisionBoxHeight": 0.25,
-        "BoxWidth": 2.0,
-        "BoxHeight": 0.25,
+        "CollisionBoxWidth": 0.6,
+        "CollisionBoxHeight": 0.1,
+        "BoxWidth": 0.6,
+        "BoxHeight": 0.1,
         "Position": {
           "$type": "LocoMotionServer.Vector2D, loco-motion",
-          "X": 0.5,
-          "Y": -0.25
+          "X": 0.3,
+          "Y": 0.2
         },
         "Scale": 1.0,
         "Rotation": 0.0
@@ -78,14 +129,14 @@
       {
         "$type": "LocoMotionServer.Platform, loco-motion",
         "TextureId": "resources/resourcePacks/Common/platform.png",
-        "CollisionBoxWidth": 0.5,
-        "CollisionBoxHeight": 0.2,
-        "BoxWidth": 0.5,
-        "BoxHeight": 0.2,
+        "CollisionBoxWidth": 0.4,
+        "CollisionBoxHeight": 0.1,
+        "BoxWidth": 0.4,
+        "BoxHeight": 0.1,
         "Position": {
           "$type": "LocoMotionServer.Vector2D, loco-motion",
-          "X": -0.75,
-          "Y": 0.5
+          "X": -0.3,
+          "Y": -0.3
         },
         "Scale": 1.0,
         "Rotation": 0.0
