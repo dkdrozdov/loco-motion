@@ -5,9 +5,9 @@ namespace LocoMotionServer
     public interface IRenderable
     {
         string TextureId { get; }
-        public ISceneObject SceneObject { get; set; }
         public void Render(IRenderer renderer);
-        // Texture or Animatable
+        // TODO: add this:
+        // public void Bind(IRenderer renderer, ISceneObject data);
     }
     public abstract class RenderableSceneObject : IRenderable
     {
@@ -24,6 +24,7 @@ namespace LocoMotionServer
     }
     public interface ITexturedRectangle : IRenderable
     {
+        // TODO: remove it.
         public IBoxObject BoxObject { get; set; }
         float Width { get; }
         float Height { get; }

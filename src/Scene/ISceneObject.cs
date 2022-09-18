@@ -10,7 +10,10 @@ namespace LocoMotionServer
         IVector2D Position { get; set; }
         public float Scale { get; set; }
         public float Rotation { get; set; }
+        // TODO: duplicates IRenderable.TextureId, remove.
         string TextureId { get; }
+        // TODO: add:
+        // IRenderable renderable {get; set; }
     }
 
     [ProtoContract]
