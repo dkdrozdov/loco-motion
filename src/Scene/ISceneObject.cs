@@ -11,6 +11,7 @@ namespace LocoMotionServer
         public float Scale { get; set; }
         public float Rotation { get; set; }
         // TODO: duplicates IRenderable.TextureId, remove.
+        // note: add texture-to-sceneobject map .json to resource packs and assign directly to IRenderable on scene loading.
         string TextureId { get; }
         // TODO: add:
         // IRenderable renderable {get; set; }

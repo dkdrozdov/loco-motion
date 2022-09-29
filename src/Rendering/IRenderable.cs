@@ -4,45 +4,34 @@ namespace LocoMotionServer
 {
     public interface IRenderable
     {
-        string TextureId { get; }
+        public string TextureId { get; }
+        public IVector2D Position { get; }
+        public void Bind(ISceneObject data);
         public void Render(IRenderer renderer);
-        // TODO: add this:
-        // public void Bind(IRenderer renderer, ISceneObject data);
     }
-    public abstract class RenderableSceneObject : IRenderable
-    {
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ISceneObject SceneObject { get; set; }
-        public string TextureId { get => SceneObject.TextureId; }
 
-        public RenderableSceneObject(ISceneObject sceneObject)
-        {
-            this.SceneObject = sceneObject;
-        }
-
-        public abstract void Render(IRenderer renderer);
-    }
     public interface ITexturedRectangle : IRenderable
     {
-        // TODO: remove it.
-        public IBoxObject BoxObject { get; set; }
         float Width { get; }
         float Height { get; }
-        // IVector2D BottomLeft { get; }
     }
 
-    public class TexturedRectangle : RenderableSceneObject, ITexturedRectangle
+    public class TexturedRectangle : ITexturedRectangle
     {
-        public TexturedRectangle(IBoxObject boxObject) : base(boxObject)
+        public TexturedRectangle(ISceneObject sceneObject)
         {
-            BoxObject = boxObject;
+            Bind(sceneObject);
         }
-
-        public float Width { get => BoxObject.BoxWidth; }
-        public float Height { get => BoxObject.BoxHeight; }
-        public override ISceneObject SceneObject { get => BoxObject; set => BoxObject = (IBoxObject)value; }
-        public IBoxObject BoxObject { get; set; }
-        public override void Render(IRenderer renderer)
+        private IBoxObject? sceneObject;
+        public float Width { get => sceneObject!.BoxWidth; }
+        public float Height { get => sceneObject!.BoxHeight; }
+        public string TextureId => sceneObject!.TextureId;
+        public IVector2D Position => sceneObject!.Position;
+        public void Bind(ISceneObject data)
+        {
+            sceneObject = (IBoxObject)data;
+        }
+        public void Render(IRenderer renderer)
         {
             renderer.Render(this);
         }
@@ -51,27 +40,33 @@ namespace LocoMotionServer
     public interface ISpritePoint : IRenderable
     {
         float Scale { get; }
-        IVector2D Position { get; }
         float Rotation { get; }
         bool FlipHorizontally { get; set; }
         bool FlipVertically { get; set; }
     }
 
-    public class SpritePoint : RenderableSceneObject, ISpritePoint
+    public class SpritePoint : ISpritePoint
     {
+        private ISceneObject? sceneObject;
+        public string TextureId => sceneObject!.TextureId;
+        public IVector2D Position => sceneObject!.Position;
         public bool FlipHorizontally { get; set; }
         public bool FlipVertically { get; set; }
-        public float Scale { get => SceneObject.Scale; }
-        public IVector2D Position { get => SceneObject.Position; }
-        public float Rotation { get => SceneObject.Rotation; }
+        public float Scale { get => sceneObject!.Scale; }
+        public float Rotation { get => sceneObject!.Rotation; }
 
-        public SpritePoint(ISceneObject sceneObject) : base(sceneObject)
+        public void Bind(ISceneObject data)
+        {
+            sceneObject = data;
+        }
+
+        public SpritePoint(ISceneObject sceneObject)
         {
             FlipHorizontally = false;
             FlipVertically = false;
         }
 
-        public override void Render(IRenderer renderer)
+        public void Render(IRenderer renderer)
         {
             renderer.Render(this);
         }

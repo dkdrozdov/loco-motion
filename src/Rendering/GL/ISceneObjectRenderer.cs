@@ -107,7 +107,7 @@ class SceneObjectRenderer : ISceneObjectRenderer
 
         Matrix4 model = Matrix4.Identity;
         model *= Matrix4.CreateScale(texturedRectangle.Width, texturedRectangle.Height, 1f);
-        model *= Matrix4.CreateTranslation(texturedRectangle.SceneObject.Position.X, texturedRectangle.SceneObject.Position.Y, 0.0f);
+        model *= Matrix4.CreateTranslation(texturedRectangle.Position.X, texturedRectangle.Position.Y, 0.0f);
 
         _shader!.SetMatrix4("model", model);
         _texture!.Use(TextureUnit.Texture0);
