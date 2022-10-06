@@ -4,7 +4,7 @@ namespace LocoMotionServer
 {
     public interface IRenderable
     {
-        public string TextureId { get; }
+        public string TextureId { get; set; }
         public IVector2D Position { get; }
         public void Bind(ISceneObject data);
         public void Render(IRenderer renderer);
@@ -25,7 +25,7 @@ namespace LocoMotionServer
         private IBoxObject? sceneObject;
         public float Width { get => sceneObject!.BoxWidth; }
         public float Height { get => sceneObject!.BoxHeight; }
-        public string TextureId => sceneObject!.TextureId;
+        public string TextureId { get; set; } = "";
         public IVector2D Position => sceneObject!.Position;
         public void Bind(ISceneObject data)
         {
@@ -48,7 +48,7 @@ namespace LocoMotionServer
     public class SpritePoint : ISpritePoint
     {
         private ISceneObject? sceneObject;
-        public string TextureId => sceneObject!.TextureId;
+        public string TextureId { get; set; } = "";
         public IVector2D Position => sceneObject!.Position;
         public bool FlipHorizontally { get; set; }
         public bool FlipVertically { get; set; }
@@ -62,6 +62,7 @@ namespace LocoMotionServer
 
         public SpritePoint(ISceneObject sceneObject)
         {
+            Bind(sceneObject);
             FlipHorizontally = false;
             FlipVertically = false;
         }
@@ -70,6 +71,7 @@ namespace LocoMotionServer
         {
             renderer.Render(this);
         }
+
     }
 
     public interface IAnimation

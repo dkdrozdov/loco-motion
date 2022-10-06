@@ -155,6 +155,12 @@ namespace LocoMotionServer
             common.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "platform.png"));
             common.ResourceItems.Add(new ResourceItem(ResourceItemKind.Sprite.ToString(), "agent.png"));
             common.Serialize();
+
+            // Init and serialize scene object defaults
+            SceneObjectDefaults defaults = new SceneObjectDefaults();
+            defaults.ObjectIdToTextureId.Add(typeof(AgentObject).Name, "Common/agent.png");
+            defaults.ObjectIdToTextureId.Add(typeof(Platform).Name, "Common/platform.png");
+            defaults.Serialize();
         }
 
         static void TestResources()

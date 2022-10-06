@@ -20,6 +20,5 @@ namespace LocoMotionServer
         [Newtonsoft.Json.JsonIgnore]
 
         public override IRenderable Renderable { get; set; }
-        public override string TextureId { get => "resources/resourcePacks/Common/platform.png"; }
     }
 }

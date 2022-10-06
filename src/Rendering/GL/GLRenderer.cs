@@ -43,7 +43,6 @@ public class GLRenderer : IRenderer
         foreach (var item in items)
         {
             _objectRenderers[item.TexturePath] = new SceneObjectRenderer(item.ResourceData!);
-            // _objectRenderers[item.TexturePath] = new Texture(item.ResourceData!);
         }
     }
 

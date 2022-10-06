@@ -83,6 +83,19 @@ namespace LocoMotionServer
         }
     }
 
+    public class SceneObjectDefaults
+    {
+        public SceneObjectDefaults()
+        {
+            ObjectIdToTextureId = new Dictionary<string, string>();
+        }
+        public Dictionary<string, string> ObjectIdToTextureId { get; set; }
+        public void Serialize()
+        {
+            Serializer.Serialize("resources/sceneObjects/sceneObjectDefaults.json", this);
+        }
+    }
+
     public class ResourcePackManifest
     {
         public ResourcePackManifest()
@@ -102,8 +115,7 @@ namespace LocoMotionServer
     {
         private IResourcePack? _resourcePack;
         private IScene? _scene;
-
-        // TODO: load from serialized resourcePack, not from constructor
+        private SceneObjectDefaults? _defaults;
         public ResourceManager()
         {
             _resourcePack = new ResourcePack();
@@ -113,7 +125,12 @@ namespace LocoMotionServer
             renderer.InitResources(_resourcePack!, _scene!);
         }
 
-        public IScene LoadScene(string path)
+        public void AssignTexture(ISceneObject sceneObject)
+        {
+            sceneObject.Renderable.TextureId = _defaults!.ObjectIdToTextureId[sceneObject.GetType().Name];
+        }
+
+        private SceneManifest ReadSceneManifest(string path)
         {
             string jsonSceneManifest = File.ReadAllText(path + "/" + "manifest.json");
             SceneManifest? sceneManifest = JsonConvert.DeserializeObject<SceneManifest>(
@@ -122,26 +139,51 @@ namespace LocoMotionServer
                 {
                     TypeNameHandling = TypeNameHandling.Auto
                 });
+            return sceneManifest!;
+        }
+
+        private ResourcePackManifest ReadResourcePackManifest(string manifestName)
+        {
+            string jsonResourcePackManifest = File.ReadAllText("resources/resourcePacks/" + manifestName + "/manifest.json");
+            ResourcePackManifest resourcePackManifest = JsonConvert.DeserializeObject<ResourcePackManifest>(jsonResourcePackManifest)!;
+
+            return resourcePackManifest;
+        }
+
+        private SceneObjectDefaults ReadSceneObjectDefaults()
+        {
+            string jsonSceneObjectDefaults = File.ReadAllText("resources/sceneObjects/sceneObjectDefaults.json");
+            SceneObjectDefaults sceneObjectDefaults = JsonConvert.DeserializeObject<SceneObjectDefaults>(jsonSceneObjectDefaults)!;
+
+            return sceneObjectDefaults;
+        }
+
+        public IScene LoadScene(string path)
+        {
+            SceneManifest sceneManifest = ReadSceneManifest(path);
+
+            // loading scene dependencies
+            List<ResourcePackManifest>? resourcePackManifests = new List<ResourcePackManifest>();
+            foreach (var manifestName in sceneManifest?.ResourcePacks!)
+            {
+                ResourcePackManifest resourcePackManifest = ReadResourcePackManifest(manifestName);
+                // aggregating unique resource items
+                foreach (var item in resourcePackManifest.ResourceItems!)
+                {
+                    string fullTexturePath = manifestName + "/" + item.TexturePath;
+                    item.TexturePath = fullTexturePath;
+                    if (_resourcePack?.ResourceItems.Find(i => string.Equals(i.TexturePath, item.TexturePath)) == null)
+                        _resourcePack?.ResourceItems.Add(item);
+                }
+            }
+
+            _defaults = ReadSceneObjectDefaults();
 
             _scene = new Scene(sceneManifest!.Size);
             foreach (var sceneObject in sceneManifest?.SceneObjects!)
             {
                 _scene.AddObject(sceneObject);
-            }
-
-            List<ResourcePackManifest>? resourcePackManifests = new List<ResourcePackManifest>();
-
-            foreach (var manifestName in sceneManifest?.ResourcePacks!)
-            {
-                string jsonResourcePackManifest = File.ReadAllText("resources/resourcePacks/" + manifestName + "/manifest.json");
-                ResourcePackManifest resourcePackManifest = JsonConvert.DeserializeObject<ResourcePackManifest>(jsonResourcePackManifest)!;
-                foreach (var item in resourcePackManifest.ResourceItems!)
-                {
-                    string fullTexturePath = "resources/resourcePacks/" + manifestName + "/" + item.TexturePath;
-                    item.TexturePath = fullTexturePath;
-                    if (_resourcePack?.ResourceItems.Find(i => string.Equals(i.TexturePath, item.TexturePath)) == null)
-                        _resourcePack?.ResourceItems.Add(item);
-                }
+                AssignTexture(sceneObject);
             }
 
             foreach (var resourceItem in _resourcePack!.ResourceItems)

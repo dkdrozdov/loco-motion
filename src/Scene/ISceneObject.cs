@@ -10,11 +10,7 @@ namespace LocoMotionServer
         IVector2D Position { get; set; }
         public float Scale { get; set; }
         public float Rotation { get; set; }
-        // TODO: duplicates IRenderable.TextureId, remove.
-        // note: add texture-to-sceneobject map .json to resource packs and assign directly to IRenderable on scene loading.
-        string TextureId { get; }
-        // TODO: add:
-        // IRenderable renderable {get; set; }
+        IRenderable Renderable { get; set; }
     }
 
     [ProtoContract]
@@ -28,7 +24,6 @@ namespace LocoMotionServer
         public IVector2D Position { get; set; } = new Vector2D();
         public float Scale { get; set; } = 1.0f;
         public float Rotation { get; set; } = 0f;
-        public abstract string TextureId { get; }
         [Newtonsoft.Json.JsonIgnore]
         public abstract IRenderable Renderable { get; set; }
         public SceneObject() : base() { }
@@ -55,7 +50,6 @@ namespace LocoMotionServer
         [Newtonsoft.Json.JsonIgnore]
 
         public override IRenderable Renderable { get; set; }
-        public override string TextureId { get => "ground.jpeg"; }
         public override float BoxWidth { get; set; }
         public override float BoxHeight { get; set; }
     }
@@ -69,7 +63,6 @@ namespace LocoMotionServer
 
         [Newtonsoft.Json.JsonIgnore]
         public override IRenderable Renderable { get; set; }
-        public override string TextureId { get => "resources/resourcePacks/Cat/sprite.png"; }
     }
 
     public class FlippedCat : SceneObject
@@ -81,6 +74,5 @@ namespace LocoMotionServer
         [Newtonsoft.Json.JsonIgnore]
 
         public override IRenderable Renderable { get; set; }
-        public override string TextureId { get => "resources/resourcePacks/FlippedCat/sprite2.png"; }
     }
 }

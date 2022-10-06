@@ -29,6 +29,6 @@ public class ResourceItem : IResourceItem
 
     public void InitItem()
     {
-        ResourceData = File.ReadAllBytes(TexturePath);
+        ResourceData = File.ReadAllBytes("resources/resourcePacks/" + TexturePath);
     }
 }
