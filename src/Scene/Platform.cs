@@ -11,11 +11,11 @@ namespace LocoMotionServer
         {
             Renderable = new TexturedRectangle(this);
         }
-        public Platform(float collisionBoxWidth, float collisionBoxHeight)
+        public Platform(float boxWidth, float boxHeight)
         {
             Renderable = new TexturedRectangle(this);
-            CollisionBoxWidth = collisionBoxWidth;
-            CollisionBoxHeight = collisionBoxHeight;
+            BoxWidth = boxWidth;
+            BoxHeight = boxHeight;
         }
         [Newtonsoft.Json.JsonIgnore]
 

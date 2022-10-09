@@ -21,7 +21,6 @@ public class LocoMotionGameWindow : GameWindow, IClock
         horizontalResolution = Monitors.GetMonitorFromWindow(this).WorkArea.Size.X;
         verticalResolution = Monitors.GetMonitorFromWindow(this).WorkArea.Size.Y;
         viewportMax = horizontalResolution > verticalResolution ? verticalResolution : horizontalResolution;
-        // Console.WriteLine("horizontalResolution: {0}, verticalResolution: {1}", horizontalResolution, verticalResolution);
     }
     protected override void OnLoad()
     {
@@ -63,8 +62,5 @@ public class LocoMotionGameWindow : GameWindow, IClock
         GL.Viewport(0, 0, Size.X, Size.Y);
 
         _sceneRenderer.UpdateRatio((float)Size.X / (float)viewportMax, (float)Size.Y / (float)viewportMax);
-
-        // Console.WriteLine("x: {0}, y: {1}", Size.X, Size.Y);
-        // Console.WriteLine("rx: {0}, ry: {1}", (float)Size.X / (float)viewportMax, (float)Size.Y / (float)viewportMax);
     }
 }

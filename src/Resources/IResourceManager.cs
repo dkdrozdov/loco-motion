@@ -4,25 +4,10 @@ using Newtonsoft.Json;
 
 namespace LocoMotionServer
 {
-    // TODO: finish draft.
-    // It should load and validate all resources required for scene.
-    // Each renderable scene object must
-    //  - define assiciation with resource kind (texture or animatable).
-    // Each scene object of animatable kind must
-    //  - define animations it requires (it could use only animations from this definition)
-    // Each scene object of animatable kind must
-    //  - define texture it requires?
     public interface IResourceManager
     {
-        // TODO: should load resource pack scene refers to.
         IScene LoadScene(string path);
         void InitRenderer(IRenderer renderer);
-    }
-
-    // TODO: finish draft.
-    public interface IResourceLoader
-    {
-        void LoadResourceItem();
     }
 
     public interface IResourcePack
@@ -74,8 +59,6 @@ namespace LocoMotionServer
         public string? Id { get; set; }
         public IVector2D Size { get; set; } = new Vector2D();
         public List<string>? ResourcePacks { get; set; }
-
-        // SceneObject type to SceneObject
         public List<SceneObject>? SceneObjects { get; set; }
         public void Serialize()
         {

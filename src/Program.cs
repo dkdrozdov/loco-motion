@@ -66,15 +66,15 @@ namespace LocoMotionServer
             o.Rotation = 5f;
             o.Force = new Vector2D(7f, 8f);
             o.Mass = 9f;
-            o.CollisionBoxWidth = 10f;
-            o.CollisionBoxHeight = 11f;
+            o.BoxWidth = 10f;
+            o.BoxHeight = 11f;
             o.isGrounded = true;
 
             var platform = new Platform();
             platform.Id = "n2";
             platform.Position = new Vector2D(1f, 2f);
-            platform.CollisionBoxHeight = 10f;
-            platform.CollisionBoxWidth = 11f;
+            platform.BoxHeight = 10f;
+            platform.BoxWidth = 11f;
 
             var obj = new TestType(new Vector2D(12f, 13f));
             obj.AddObject(platform);
@@ -175,8 +175,6 @@ namespace LocoMotionServer
 
         static void Main(string[] args)
         {
-            // TestSerialization();
-            // TestResources();
             InitResources();
             MainLoop();
         }

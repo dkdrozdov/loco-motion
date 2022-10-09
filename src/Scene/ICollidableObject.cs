@@ -21,11 +21,8 @@ namespace LocoMotionServer
         public abstract float BoxHeight { get; set; }
     }
 
-    // TODO: remove inheritance or remove CollisionBox* props.
     public interface ICollidableObject : IBoxObject
     {
-        public float CollisionBoxWidth { get; set; }
-        public float CollisionBoxHeight { get; set; }
         void OnCollision(ICollisionEvent e);
     }
 
@@ -35,11 +32,9 @@ namespace LocoMotionServer
     public abstract class CollidableObject : BoxObject, ICollidableObject
     {
         [ProtoMember(3)]
-        public float CollisionBoxWidth { get; set; }
+        public override float BoxWidth { get; set; }
         [ProtoMember(4)]
-        public float CollisionBoxHeight { get; set; }
-        public override float BoxWidth { get => CollisionBoxWidth; set => CollisionBoxWidth = value; }
-        public override float BoxHeight { get => CollisionBoxHeight; set => CollisionBoxHeight = value; }
+        public override float BoxHeight { get; set; }
         public CollidableObject() : base() { }
 
         public void OnCollision(ICollisionEvent e)

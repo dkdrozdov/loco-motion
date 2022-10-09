@@ -34,8 +34,6 @@
           "X": 0.0,
           "Y": 0.0
         },
-        "CollisionBoxWidth": 0.0,
-        "CollisionBoxHeight": 0.0,
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
@@ -65,8 +63,6 @@
           "X": 0.0,
           "Y": 0.0
         },
-        "CollisionBoxWidth": 0.0,
-        "CollisionBoxHeight": 0.0,
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
@@ -96,8 +92,6 @@
           "X": 0.0,
           "Y": 0.0
         },
-        "CollisionBoxWidth": 0.0,
-        "CollisionBoxHeight": 0.0,
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
@@ -110,8 +104,6 @@
       },
       {
         "$type": "LocoMotionServer.Platform, loco-motion",
-        "CollisionBoxWidth": 0.6,
-        "CollisionBoxHeight": 0.1,
         "BoxWidth": 0.6,
         "BoxHeight": 0.1,
         "Position": {
@@ -124,8 +116,6 @@
       },
       {
         "$type": "LocoMotionServer.Platform, loco-motion",
-        "CollisionBoxWidth": 0.4,
-        "CollisionBoxHeight": 0.1,
         "BoxWidth": 0.4,
         "BoxHeight": 0.1,
         "Position": {
