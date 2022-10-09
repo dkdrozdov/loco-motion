@@ -2,13 +2,12 @@ namespace LocoMotionServer
 {
     class AgentObject : PhysicalObject, IPhysicalObject
     {
-        public AgentObject(string id, IVector2D position, IVector2D velocity, IVector2D face, float mass, IVector2D bottomLeft, IVector2D topRigth)
+        public AgentObject() : base()
         {
-            this.Id = id;
-            Position = position;
-            Velocity = velocity;
-            Rotation = face;
-            Mass = mass;
+            Renderable = new SpritePoint(this);
+            Scale = 0.125f;
         }
+        [Newtonsoft.Json.JsonIgnore]
+        public override IRenderable Renderable { get; set; }
     }
 }

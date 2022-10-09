@@ -1,0 +1,14 @@
+{
+  "$type": "LocoMotionServer.ResourcePackManifest, loco-motion",
+  "Id": "Cat",
+  "ResourceItems": {
+    "$type": "System.Collections.Generic.List`1[[ResourceItem, loco-motion]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "ResourceItem, loco-motion",
+        "TexturePath": "sprite.png",
+        "Kind": "Sprite"
+      }
+    ]
+  }
+}

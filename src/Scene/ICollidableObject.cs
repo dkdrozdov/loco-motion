@@ -2,23 +2,39 @@ using ProtoBuf;
 
 namespace LocoMotionServer
 {
-    public interface ICollidableObject : ISceneObject
+    public interface IBoxObject : ISceneObject
     {
-        public float CollisionBoxWidth { get; set; }
-        public float CollisionBoxHeight { get; set; }
+        public float BoxWidth { get; set; }
+        public float BoxHeight { get; set; }
+    }
+    public abstract class BoxObject : SceneObject, IBoxObject
+    {
+        public BoxObject() : base() { }
+
+        public BoxObject(float boxWidth, float boxHeight)
+        {
+            BoxWidth = boxWidth;
+            BoxHeight = boxHeight;
+        }
+
+        public abstract float BoxWidth { get; set; }
+        public abstract float BoxHeight { get; set; }
+    }
+
+    public interface ICollidableObject : IBoxObject
+    {
         void OnCollision(ICollisionEvent e);
     }
 
     [ProtoContract]
     [ProtoInclude(1, typeof(Platform))]
     [ProtoInclude(2, typeof(PhysicalObject))]
-    public class CollidableObject : SceneObject, ICollidableObject
+    public abstract class CollidableObject : BoxObject, ICollidableObject
     {
         [ProtoMember(3)]
-        public float CollisionBoxWidth { get; set; }
+        public override float BoxWidth { get; set; }
         [ProtoMember(4)]
-        public float CollisionBoxHeight { get; set; }
-
+        public override float BoxHeight { get; set; }
         public CollidableObject() : base() { }
 
         public void OnCollision(ICollisionEvent e)

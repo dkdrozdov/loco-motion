@@ -20,7 +20,7 @@ namespace LocoMotionServer
     public class Scene : IScene
     {
         [ProtoMember(1)]
-        public IVector2D Size { get; set; } = new Vector2D();
+        public IVector2D Size { get; set; } = new Vector2D(1f, 1f);
         [ProtoMember(2)]
         public IEnumerable<ISceneObject> SceneObjects => _objects;
 

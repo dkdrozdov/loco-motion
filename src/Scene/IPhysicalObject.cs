@@ -6,7 +6,6 @@ namespace LocoMotionServer
     public interface IPhysicalObject : ICollidableObject
     {
         IVector2D Velocity { get; set; }
-        IVector2D Rotation { get; set; }
         IVector2D Force { get; set; }
         IVector2D Momentum { get; }
         float Mass { get; set; }
@@ -14,17 +13,15 @@ namespace LocoMotionServer
         void OnMove(IMoveEvent e);
     }
 
-    public class PhysicalObject : CollidableObject, IPhysicalObject
+    public abstract class PhysicalObject : CollidableObject, IPhysicalObject
     {
         [ProtoMember(2)]
         public IVector2D Velocity { get; set; } = new Vector2D();
         [ProtoMember(3)]
-        public IVector2D Rotation { get; set; } = new Vector2D();
-        [ProtoMember(4)]
         public IVector2D Force { get; set; } = new Vector2D();
-        [ProtoMember(5)]
+        [ProtoMember(4)]
         public float Mass { get; set; } = 1.0f;
-        [ProtoMember(6)]
+        [ProtoMember(5)]
         public bool isGrounded { get; set; } = false;
 
         public IVector2D Momentum => Mass * (Vector2D)Velocity;
