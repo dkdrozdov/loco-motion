@@ -5,6 +5,8 @@
     <RootNamespace>LocoMotionServer</RootNamespace>
     <StartupObject>LocoMotionServer.Program</StartupObject>
     <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="protobuf-net" Version="3.1.17"/>
