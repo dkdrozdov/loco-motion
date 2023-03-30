@@ -1,24 +1,24 @@
-namespace LocoMotionServer
+namespace Server
 {
-    public interface IPlatform : ICollidableObject
+  public interface IPlatform : ICollidableObject
+  {
+
+  }
+
+  public class Platform : CollidableObject
+  {
+    public Platform() : base()
     {
-
+      Renderable = new TexturedRectangle(this);
     }
-
-    public class Platform : CollidableObject
+    public Platform(float boxWidth, float boxHeight)
     {
-        public Platform() : base()
-        {
-            Renderable = new TexturedRectangle(this);
-        }
-        public Platform(float boxWidth, float boxHeight)
-        {
-            Renderable = new TexturedRectangle(this);
-            BoxWidth = boxWidth;
-            BoxHeight = boxHeight;
-        }
-        [Newtonsoft.Json.JsonIgnore]
-
-        public override IRenderable Renderable { get; set; }
+      Renderable = new TexturedRectangle(this);
+      BoxWidth = boxWidth;
+      BoxHeight = boxHeight;
     }
+    [Newtonsoft.Json.JsonIgnore]
+
+    public override IRenderable Renderable { get; set; }
+  }
 }

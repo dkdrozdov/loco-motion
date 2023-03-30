@@ -1,8 +1,8 @@
-namespace LocoMotionServer
+namespace Server
 {
-    public interface ILifecycleManager { }
+  public interface ILifecycleManager { }
 
-    public class LifecycleManager : ILifecycleManager
-    {
-    }
+  public class LifecycleManager : ILifecycleManager
+  {
+  }
 }

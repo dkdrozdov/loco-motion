@@ -1,45 +1,45 @@
 using ProtoBuf;
 
-namespace LocoMotionServer
+namespace Server
 {
-    public interface IBoxObject : ISceneObject
-    {
-        public float BoxWidth { get; set; }
-        public float BoxHeight { get; set; }
-    }
-    public abstract class BoxObject : SceneObject, IBoxObject
-    {
-        public BoxObject() : base() { }
+  public interface IBoxObject : ISceneObject
+  {
+    public float BoxWidth { get; set; }
+    public float BoxHeight { get; set; }
+  }
+  public abstract class BoxObject : SceneObject, IBoxObject
+  {
+    public BoxObject() : base() { }
 
-        public BoxObject(float boxWidth, float boxHeight)
-        {
-            BoxWidth = boxWidth;
-            BoxHeight = boxHeight;
-        }
-
-        public abstract float BoxWidth { get; set; }
-        public abstract float BoxHeight { get; set; }
+    public BoxObject(float boxWidth, float boxHeight)
+    {
+      BoxWidth = boxWidth;
+      BoxHeight = boxHeight;
     }
 
-    public interface ICollidableObject : IBoxObject
-    {
-        void OnCollision(ICollisionEvent e);
-    }
+    public abstract float BoxWidth { get; set; }
+    public abstract float BoxHeight { get; set; }
+  }
 
-    [ProtoContract]
-    [ProtoInclude(1, typeof(Platform))]
-    [ProtoInclude(2, typeof(PhysicalObject))]
-    public abstract class CollidableObject : BoxObject, ICollidableObject
-    {
-        [ProtoMember(3)]
-        public override float BoxWidth { get; set; }
-        [ProtoMember(4)]
-        public override float BoxHeight { get; set; }
-        public CollidableObject() : base() { }
+  public interface ICollidableObject : IBoxObject
+  {
+    void OnCollision(ICollisionEvent e);
+  }
 
-        public void OnCollision(ICollisionEvent e)
-        {
-            // Noop.
-        }
+  [ProtoContract]
+  [ProtoInclude(1, typeof(Platform))]
+  [ProtoInclude(2, typeof(PhysicalObject))]
+  public abstract class CollidableObject : BoxObject, ICollidableObject
+  {
+    [ProtoMember(3)]
+    public override float BoxWidth { get; set; }
+    [ProtoMember(4)]
+    public override float BoxHeight { get; set; }
+    public CollidableObject() : base() { }
+
+    public void OnCollision(ICollisionEvent e)
+    {
+      // Noop.
     }
+  }
 }

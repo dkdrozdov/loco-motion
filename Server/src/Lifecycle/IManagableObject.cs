@@ -1,23 +1,23 @@
-namespace LocoMotionServer
+namespace Server
 {
-    public interface IManagableObject
+  public interface IManagableObject
+  {
+    void OnCreate();
+    void OnDestroy();
+  }
+
+  public class ManagableObject : IManagableObject
+  {
+    public ManagableObject() { }
+
+    public void OnCreate()
     {
-        void OnCreate();
-        void OnDestroy();
+      // NOOP.
     }
 
-    public class ManagableObject : IManagableObject
+    public void OnDestroy()
     {
-        public ManagableObject() { }
-
-        public void OnCreate()
-        {
-            // NOOP.
-        }
-
-        public void OnDestroy()
-        {
-            // NOOP.
-        }
+      // NOOP.
     }
+  }
 }
