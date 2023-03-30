@@ -1,5 +1,5 @@
 {
-  "$type": "LocoMotionServer.SceneObjectDefaults, Server",
+  "$type": "Server.SceneObjectDefaults, Server",
   "ObjectIdToTextureId": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[System.String, System.Private.CoreLib]], System.Private.CoreLib",
     "AgentObject": "Common/agent.png",

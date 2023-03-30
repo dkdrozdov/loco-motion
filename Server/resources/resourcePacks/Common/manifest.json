@@ -1,5 +1,5 @@
 {
-  "$type": "LocoMotionServer.ResourcePackManifest, Server",
+  "$type": "Server.ResourcePackManifest, Server",
   "Id": "Common",
   "ResourceItems": {
     "$type": "System.Collections.Generic.List`1[[ResourceItem, Server]], System.Private.CoreLib",

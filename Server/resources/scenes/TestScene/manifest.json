@@ -1,8 +1,8 @@
 {
-  "$type": "LocoMotionServer.SceneManifest, Server",
+  "$type": "Server.SceneManifest, Server",
   "Id": "TestScene",
   "Size": {
-    "$type": "LocoMotionServer.Vector2D, Server",
+    "$type": "Server.Vector2D, Server",
     "X": 1.5,
     "Y": 1.5
   },
@@ -13,31 +13,31 @@
     ]
   },
   "SceneObjects": {
-    "$type": "System.Collections.Generic.List`1[[LocoMotionServer.SceneObject, Server]], System.Private.CoreLib",
+    "$type": "System.Collections.Generic.List`1[[Server.SceneObject, Server]], System.Private.CoreLib",
     "$values": [
       {
-        "$type": "LocoMotionServer.AgentObject, Server",
+        "$type": "Server.AgentObject, Server",
         "Velocity": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Force": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Mass": 1.0,
         "isGrounded": false,
         "Momentum": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.3,
           "Y": 0.4
         },
@@ -45,28 +45,28 @@
         "Rotation": 0.0
       },
       {
-        "$type": "LocoMotionServer.AgentObject, Server",
+        "$type": "Server.AgentObject, Server",
         "Velocity": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Force": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Mass": 1.0,
         "isGrounded": false,
         "Momentum": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": -0.3,
           "Y": 0.0
         },
@@ -74,28 +74,28 @@
         "Rotation": 0.0
       },
       {
-        "$type": "LocoMotionServer.AgentObject, Server",
+        "$type": "Server.AgentObject, Server",
         "Velocity": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Force": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "Mass": 1.0,
         "isGrounded": false,
         "Momentum": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.0,
           "Y": 0.0
         },
         "BoxWidth": 0.0,
         "BoxHeight": 0.0,
         "Position": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.2,
           "Y": -0.2
         },
@@ -103,11 +103,11 @@
         "Rotation": 0.0
       },
       {
-        "$type": "LocoMotionServer.Platform, Server",
+        "$type": "Server.Platform, Server",
         "BoxWidth": 0.6,
         "BoxHeight": 0.1,
         "Position": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": 0.3,
           "Y": 0.2
         },
@@ -115,11 +115,11 @@
         "Rotation": 0.0
       },
       {
-        "$type": "LocoMotionServer.Platform, Server",
+        "$type": "Server.Platform, Server",
         "BoxWidth": 0.4,
         "BoxHeight": 0.1,
         "Position": {
-          "$type": "LocoMotionServer.Vector2D, Server",
+          "$type": "Server.Vector2D, Server",
           "X": -0.3,
           "Y": -0.3
         },
