@@ -14,8 +14,4 @@
     <PackageReference Include="StbImageSharp" Version="2.27.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ServerLib\ServerLib.csproj" />
-  </ItemGroup>
-
 </Project>

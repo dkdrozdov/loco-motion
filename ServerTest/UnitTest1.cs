@@ -1,4 +1,4 @@
-namespace ServerLibTest;
+namespace ServerTest;
 
 [TestClass]
 public class UnitTest1

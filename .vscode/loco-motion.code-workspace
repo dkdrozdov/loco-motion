@@ -8,10 +8,7 @@
 			"path": "../Server"
 		},
 		{
-			"path": "../ServerLib"
-		},
-		{
-			"path": "../ServerLibTest"
+			"path": "../ServerTest"
 		}
 	],
 	"settings": {
