@@ -1,6 +1,6 @@
 namespace Server
 {
-  class AgentObject : PhysicalObject, IPhysicalObject
+  public class AgentObject : PhysicalObject, IPhysicalObject
   {
     public AgentObject() : base()
     {

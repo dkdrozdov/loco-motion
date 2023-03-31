@@ -56,7 +56,7 @@ namespace Server
       Console.WriteLine("Server processing tick");
       long processingStartTimestamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
-      _physics.step(_accumulatedTimeDeltaMs / 1000f);
+      _physics.Step(_accumulatedTimeDeltaMs / 1000f);
 
       _accumulatedTimeDeltaMs = 0;
       long processingEndTimestamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
