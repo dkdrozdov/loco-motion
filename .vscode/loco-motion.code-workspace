@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"path": "..",
+			"name": "LocoMotionSolution"
+		},
+		{
+			"path": "../Server"
+		},
+		{
+			"path": "../ServerTest"
+		}
+	],
+	"settings": {
+		"[csharp]": {
+			"editor.defaultFormatter": "ms-dotnettools.csharp",
+			"editor.tabSize": 2,
+			"editor.codeActionsOnSave": {
+				"source.fixAll": true,
+				"source.organizeImports": true
+			}
+		},
+		"[jsonc]": {
+			"editor.quickSuggestions": {
+				"strings": true
+			},
+			"editor.suggest.insertMode": "replace",
+			"gitlens.codeLens.scopes": [
+				"document"
+			],
+			"editor.defaultFormatter": "vscode.json-language-features",
+			"editor.formatOnSave": true,
+			"editor.tabSize": 4
+		},
+	}
+}

@@ -1,0 +1,131 @@
+{
+  "$type": "Server.SceneManifest, Server",
+  "Id": "TestScene",
+  "Size": {
+    "$type": "Server.Vector2D, Server",
+    "X": 1.5,
+    "Y": 1.5
+  },
+  "ResourcePacks": {
+    "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
+    "$values": [
+      "Common"
+    ]
+  },
+  "SceneObjects": {
+    "$type": "System.Collections.Generic.List`1[[Server.SceneObject, Server]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "Server.AgentObject, Server",
+        "Velocity": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Force": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Mass": 1.0,
+        "isGrounded": false,
+        "Momentum": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "BoxWidth": 0.0,
+        "BoxHeight": 0.0,
+        "Position": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.3,
+          "Y": 0.4
+        },
+        "Scale": 0.125,
+        "Rotation": 0.0
+      },
+      {
+        "$type": "Server.AgentObject, Server",
+        "Velocity": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Force": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Mass": 1.0,
+        "isGrounded": false,
+        "Momentum": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "BoxWidth": 0.0,
+        "BoxHeight": 0.0,
+        "Position": {
+          "$type": "Server.Vector2D, Server",
+          "X": -0.3,
+          "Y": 0.0
+        },
+        "Scale": 0.125,
+        "Rotation": 0.0
+      },
+      {
+        "$type": "Server.AgentObject, Server",
+        "Velocity": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Force": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Mass": 1.0,
+        "isGrounded": false,
+        "Momentum": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "BoxWidth": 0.0,
+        "BoxHeight": 0.0,
+        "Position": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.2,
+          "Y": -0.2
+        },
+        "Scale": 0.125,
+        "Rotation": 0.0
+      },
+      {
+        "$type": "Server.Platform, Server",
+        "BoxWidth": 0.6,
+        "BoxHeight": 0.1,
+        "Position": {
+          "$type": "Server.Vector2D, Server",
+          "X": 0.3,
+          "Y": 0.2
+        },
+        "Scale": 1.0,
+        "Rotation": 0.0
+      },
+      {
+        "$type": "Server.Platform, Server",
+        "BoxWidth": 0.4,
+        "BoxHeight": 0.1,
+        "Position": {
+          "$type": "Server.Vector2D, Server",
+          "X": -0.3,
+          "Y": -0.3
+        },
+        "Scale": 1.0,
+        "Rotation": 0.0
+      }
+    ]
+  }
+}

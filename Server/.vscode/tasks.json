@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/loco-motion.csproj"
+        "${workspaceFolder}/Server.csproj"
       ],
       "problemMatcher": "$msCompile"
     }
